@@ -189,6 +189,39 @@ work_OD_plot_reorder_KT_char[["IDtarget"]]
 work_OD_plot_reorder_KT_char[["value"]]
 ```
 
+```{r}
+library(RColorBrewer)
+brewer.pal(n = 5, "Set1")
+```
+
+
+```{r}
+# add colour code
+
+work_OD_plot_reorder_KT_plotly = work_OD_plot_reorder_KT_char %>%
+  mutate(
+    link_colour = case_when(
+      residence_area == "HKI" ~ "#E41A1C",
+      residence_area == "KL" ~ "#4DAF4A",
+      residence_area == "NTW" ~ "#FF7F00",
+      residence_area == "NTE" ~ "#984EA3",
+      residence_area == "I" ~ "#377EB8"
+    )
+  )
+
+  mutate(
+    link_colour = case_when(
+      residence_area == "HKI" ~ 'rgba(0,255,255,0.4)',
+      residence_area == "KL" ~ 'rgba(255,0,255,0.4)',
+      residence_area == "NTW" ~ 'rgba(0,255,0,0.4)',
+      residence_area == "NTE" ~ 'rgba(255,255, 0, 0.4)',
+      residence_area == "I" ~ 'rgba(255,0,0,0.4)'
+    )
+  )
+```
+
+
+
 
 ```{r}
 fig <- plot_ly(
@@ -206,9 +239,12 @@ fig <- plot_ly(
     ),
 
     link = list(
-      source = work_OD_plot_reorder_KT_char[["IDsource"]],
-      target = work_OD_plot_reorder_KT_char[["IDtarget"]],
-      value =  work_OD_plot_reorder_KT_char[["value"]]
+      source = work_OD_plot_reorder_KT_plotly[["IDsource"]],
+      target = work_OD_plot_reorder_KT_plotly[["IDtarget"]],
+      value = work_OD_plot_reorder_KT_plotly[["value"]],
+      color = work_OD_plot_reorder_KT_plotly[["link_colour"]]
+      # color = "#00FF00"
+
     )
   )
 
