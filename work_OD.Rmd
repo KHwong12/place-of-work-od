@@ -25,6 +25,126 @@ work_OD = read_csv("data/data-edited/work_OD_clean.csv") %>%
     "N_workers" = "Number of Persons"
   )
 ```
+
+# Add categorial variables
+
+```{r}
+work_OD_order = work_OD %>%
+  mutate(
+    residence_area = case_when(
+      place_of_residence %in% c("Central and Western", "Wan Chai", "Eastern", "Southern") ~ "HKI",
+      place_of_residence %in% c("Yau Tsim Mong", "Sham Shui Po", "Kowloon City", "Wong Tai Sin", "Kwun Tong") ~ "KL",
+      place_of_residence %in% c("Kwai Tsing", "Tsuen Wan", "Tuen Mun", "Yuen Long") ~ "NTW",
+      place_of_residence %in% c("North", "Tai Po", "Sha Tin", "Sai Kung") ~ "NTE",
+      place_of_residence %in% c("Islands") ~ "I",
+    )
+  )
+```
+
+
+```{r}
+# Needs to classify origin and dest as different nodes, even the place of work is same as place of residences
+# Add an ending space character to differentiate between origin and dest
+work_OD_differentiate = work_OD_order %>%
+  mutate(place_of_work_e = paste0(place_of_work, " "))
+
+# drop factor levels
+origin_list = as.character(unique(work_OD_differentiate$place_of_residence))
+destination_list = unique(work_OD_differentiate$place_of_work_e)
+
+# Create node ID including all origin and destination nodes
+nodes_OD = data.frame(node_name = c(origin_list, destination_list)) %>%
+  unique() %>%
+  mutate(node_ID = seq.int(nrow(.)) - 1) # Source/Target needs to be zero-indexed for sankeyNetwork.
+
+```
+
+## Refactor district order
+
+```{r}
+DISTRICT_ORDER = c("Central and Western", "Wan Chai", "Eastern", "Southern", "Yau Tsim Mong", "Sham Shui Po", "Kowloon City", "Wong Tai Sin", "Kwun Tong", "Kwai Tsing", "Tsuen Wan", "Tuen Mun", "Yuen Long", "North", "Tai Po", "Sha Tin", "Sai Kung", "Islands")
+
+WORKPLACE_ORDER = c("Central and Western", "Wan Chai", "Eastern", "Southern", "Yau Tsim Mong", "Sham Shui Po", "Kowloon City", "Wong Tai Sin", "Kwun Tong", "Kwai Chung New Town", "Tsuen Wan New Town", "Tsing Yi New Town", "Tuen Mun New Town", "Tin Shui Wai New Town", "Yuen Long New Town", "Fanling/ Sheung Shui New Town", "Tai Po New Town", "Sha Tin New Town", "Ma On Shan New Town", "Tseung Kwan O New Town", "North Lantau New Town", "Other areas in the New Territories", "No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong")
+```
+
+```{r}
+work_OD_plot = work_OD_differentiate %>%
+  left_join(nodes_OD, by = c("place_of_residence" = "node_name")) %>%
+  rename("origin_ID" = "node_ID") %>%
+  left_join(nodes_OD, by = c("place_of_work_e" = "node_name")) %>%
+  rename("destination_ID" = "node_ID") 
+
+```
+
+```{r}
+# Reorder has to be done after join?
+work_OD_plot_reorder = work_OD_plot %>% 
+  mutate(
+    place_of_residence = factor(place_of_residence, DISTRICT_ORDER),
+    place_of_work = factor(place_of_work, WORKPLACE_ORDER)
+  )
+
+work_OD_plot_reorder_rmspecial = work_OD_plot_reorder %>%
+  subset(place_of_work != "No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong")
+
+work_OD_plot_reorder_KT = work_OD_plot_reorder %>%
+  subset(place_of_work == "Kwun Tong")
+```
+
+## ggalluvial
+
+```{r}
+OD_work_alluvial = ggplot(work_OD_plot_reorder_rmspecial, aes(y = N_workers, axis1 = place_of_residence, axis2 = place_of_work)) +
+  geom_alluvium(aes(fill = residence_area), width = 1/12, alpha = .4) +
+  geom_stratum(width = 1/12, fill = "#EEEEEE", color = "grey") +
+  geom_text(stat = "stratum", aes(label = after_stat(stratum)), size = 2) +
+  scale_fill_brewer(type = "qual", palette = "Set1") +
+  theme_void() +
+  theme(
+    legend.position = "None"
+  ) +
+  labs(
+    title = "OD",
+    subtitle = "Place of residence and work of commuters in Hong Kong",
+    caption = "Note: workers with no fixed places of work in Hong Kong or work in Marine/at home/places outside Hong Kong are excluded."
+  )
+
+OD_work_alluvial
+```
+
+
+## Sankey Network
+
+```{r}
+nodes_OD_KT = nodes_OD %>% subset(node_ID <= 17 | node_ID == 26) %>%
+  dplyr::select(node_name) %>%
+  as.data.frame()
+
+work_OD_plot_reorder_KT_char = work_OD_plot_reorder_KT %>%
+  mutate(place_of_residence_e = as.character(place_of_residence)) %>%
+  rename(
+    source = place_of_residence_e,
+    target = place_of_work_e,
+    value = N_workers,
+    IDsource = origin_ID,
+    IDtarget = destination_ID
+  ) %>%
+  dplyr::select(-place_of_residence, place_of_work, residence_area) %>%
+  as.data.frame()
+
+```
+
+
+```{r}
+
+# Make the Network
+sankeyNetwork(Links = work_OD_plot_reorder_KT_char, Nodes = nodes_OD_KT,
+              Source = "IDsource", Target = "IDtarget",
+              Value = "value", NodeID = "node_name", 
+              sinksRight = FALSE)
+```
+
+
 ```{r}
 # Load dataset from github
 data <- read.table("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/13_AdjacencyDirectedWeighted.csv", header=TRUE)
@@ -54,93 +174,51 @@ sankeyNetwork(Links = data_long, Nodes = nodes,
                      Value = "value", NodeID = "name", 
                      sinksRight=FALSE, colourScale=ColourScal, nodeWidth=40, fontSize=13, nodePadding=20)
 ```
+
 ```{r}
-nodes[1,1] == nodes[11, 1]
+work_OD_plot_reorder_KT_char
 ```
 
 ```{r}
-DISTRICT_ORDER = c("Central and Western", "Wan Chai", "Eastern", "Southern", "Yau Tsim Mong", "Sham Shui Po", "Kowloon City", "Wong Tai Sin", "Kwun Tong", "Kwai Tsing", "Tsuen Wan", "Tuen Mun", "Yuen Long", "North", "Tai Po", "Sha Tin", "Sai Kung", "Islands")
+nodes_OD_KT[["node_name"]]
 
-WORKPLACE_ORDER = c("Central and Western", "Wan Chai", "Eastern", "Southern", "Yau Tsim Mong", "Sham Shui Po", "Kowloon City", "Wong Tai Sin", "Kwun Tong", "Kwai Chung New Town", "Tsuen Wan New Town", "Tsing Yi New Town", "Tuen Mun New Town", "Tin Shui Wai New Town", "Yuen Long New Town", "Fanling/ Sheung Shui New Town", "Tai Po New Town", "Sha Tin New Town", "Ma On Shan New Town", "Tseung Kwan O New Town", "North Lantau New Town", "Other areas in the New Territories", "No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong")
-```
+work_OD_plot_reorder_KT_char[["IDsource"]]
 
+work_OD_plot_reorder_KT_char[["IDtarget"]]
 
-```{r}
-# Needs to classify origin and dest as different nodes, even the place of work is same as place of residences
-# Add an ending space character to differentiate between origin and dest
-work_OD_differentiate = work_OD %>%
-  mutate(place_of_work_e = paste0(place_of_work, " "))
-
-
-origin_list = unique(work_OD_differentiate$place_of_residence)
-destination_list = unique(work_OD_differentiate$place_of_work_e)
-
-# Create node ID including all origin and destination nodes
-nodes_OD = data.frame(node_name = c(origin_list, destination_list)) %>%
-  unique() %>%
-  mutate(node_ID = seq.int(nrow(.)))
-
+work_OD_plot_reorder_KT_char[["value"]]
 ```
 
 
 ```{r}
-work_OD_plot = work_OD_differentiate %>%
-  left_join(nodes_OD, by = c("place_of_residence" = "node_name")) %>%
-  rename("origin_ID" = "node_ID") %>%
-  left_join(nodes_OD, by = c("place_of_work_e" = "node_name")) %>%
-  rename("destination_ID" = "node_ID") 
+fig <- plot_ly(
+    type = "sankey",
+    orientation = "h",
 
-```
+    node = list(
+      label = nodes_OD[["node_name"]],
+      pad = 15,
+      thickness = 20,
+      line = list(
+        color = "black",
+        width = 0.5
+      )
+    ),
 
-```{r}
-work_OD_plot_reorder = work_OD_plot %>%
-  mutate(
-    place_of_residence = factor(place_of_residence, DISTRICT_ORDER),
-    place_of_work = factor(place_of_work, WORKPLACE_ORDER)
-  ) %>%
-  mutate(
-    residence_area = case_when(
-      place_of_residence %in% c("Central and Western", "Wan Chai", "Eastern", "Southern") ~ "HKI",
-      place_of_residence %in% c("Yau Tsim Mong", "Sham Shui Po", "Kowloon City", "Wong Tai Sin", "Kwun Tong") ~ "KL",
-      place_of_residence %in% c("Kwai Tsing", "Tsuen Wan", "Tuen Mun", "Yuen Long") ~ "NTW",
-      place_of_residence %in% c("North", "Tai Po", "Sha Tin", "Sai Kung") ~ "NTE",
-      place_of_residence %in% c("Islands") ~ "I",
+    link = list(
+      source = work_OD_plot_reorder_KT_char[["IDsource"]],
+      target = work_OD_plot_reorder_KT_char[["IDtarget"]],
+      value =  work_OD_plot_reorder_KT_char[["value"]]
     )
   )
 
-work_OD_plot_reorder_rmspecial = work_OD_plot_reorder %>%
-  subset(place_of_work != "No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong")
+fig <- fig %>% layout(
+    title = "Basic Sankey Diagram",
+    font = list(
+      size = 10
+    )
+)
 
-work_OD_plot_reorder_KT = work_OD_plot_reorder %>%
-  subset(place_of_work == "Kwun Tong")
-```
-
-
-
-```{r}
-# Make the Network
-sankeyNetwork(Links = work_OD_plot_reorder_KT, Nodes = nodes_OD,
-              Source = "origin_ID", Target = "destination_ID",
-              Value = "N_workers", NodeID = "node_name",
-              sinksRight = FALSE)
-```
-
-
-
-
-```{r}
-OD_work_alluvial = ggplot(work_OD_plot_reorder_rmspecial, aes(y = N_workers, axis1 = place_of_residence, axis2 = place_of_work)) +
-  geom_alluvium(aes(fill = residence_area), width = 1/12) +
-  geom_stratum(width = 1/12, fill = "#EEEEEE", color = "grey") +
-  geom_text(stat = "stratum", aes(label = after_stat(stratum)), size = 2) +
-  scale_fill_brewer(type = "qual", palette = "Set1") +
-  theme_void() +
-  theme(
-    legend.position = "None"
-  )
-```
-
-```{r}
-OD_work_alluvial
+fig
 ```
 
