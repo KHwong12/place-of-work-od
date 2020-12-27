@@ -59,6 +59,13 @@ nodes[1,1] == nodes[11, 1]
 ```
 
 ```{r}
+DISTRICT_ORDER = c("Central and Western", "Wan Chai", "Eastern", "Southern", "Yau Tsim Mong", "Sham Shui Po", "Kowloon City", "Wong Tai Sin", "Kwun Tong", "Kwai Tsing", "Tsuen Wan", "Tuen Mun", "Yuen Long", "North", "Tai Po", "Sha Tin", "Sai Kung", "Islands")
+
+WORKPLACE_ORDER = c("Central and Western", "Wan Chai", "Eastern", "Southern", "Yau Tsim Mong", "Sham Shui Po", "Kowloon City", "Wong Tai Sin", "Kwun Tong", "Kwai Chung New Town", "Tsuen Wan New Town", "Tsing Yi New Town", "Tuen Mun New Town", "Tin Shui Wai New Town", "Yuen Long New Town", "Fanling/ Sheung Shui New Town", "Tai Po New Town", "Sha Tin New Town", "Ma On Shan New Town", "Tseung Kwan O New Town", "North Lantau New Town", "Other areas in the New Territories", "No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong")
+```
+
+
+```{r}
 # Needs to classify origin and dest as different nodes, even the place of work is same as place of residences
 # Add an ending space character to differentiate between origin and dest
 work_OD_differentiate = work_OD %>%
@@ -85,21 +92,49 @@ work_OD_plot = work_OD_differentiate %>%
 
 ```
 
+```{r}
+work_OD_plot_reorder = work_OD_plot %>%
+  mutate(
+    place_of_residence = factor(place_of_residence, DISTRICT_ORDER),
+    place_of_work = factor(place_of_work, WORKPLACE_ORDER)
+  ) %>%
+  mutate(
+    residence_area = case_when(
+      place_of_residence %in% c("Central and Western", "Wan Chai", "Eastern", "Southern") ~ "HKI",
+      place_of_residence %in% c("Yau Tsim Mong", "Sham Shui Po", "Kowloon City", "Wong Tai Sin", "Kwun Tong") ~ "KL",
+      place_of_residence %in% c("Kwai Tsing", "Tsuen Wan", "Tuen Mun", "Yuen Long") ~ "NTW",
+      place_of_residence %in% c("North", "Tai Po", "Sha Tin", "Sai Kung") ~ "NTE",
+      place_of_residence %in% c("Islands") ~ "I",
+    )
+  )
+
+work_OD_plot_reorder_rmspecial = work_OD_plot_reorder %>%
+  subset(place_of_work != "No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong")
+
+work_OD_plot_reorder_KT = work_OD_plot_reorder %>%
+  subset(place_of_work == "Kwun Tong")
+```
+
 
 
 ```{r}
 # Make the Network
-sankeyNetwork(Links = work_OD_plot, Nodes = nodes_OD,
+sankeyNetwork(Links = work_OD_plot_reorder_KT, Nodes = nodes_OD,
               Source = "origin_ID", Target = "destination_ID",
               Value = "N_workers", NodeID = "node_name",
               sinksRight = FALSE)
 ```
 
+
+
+
 ```{r}
-OD_work_alluvial = ggplot(work_OD_plot , aes(y = N_workers, axis1 = place_of_residence, axis2 = place_of_work)) +
-  geom_alluvium(aes(fill = as.factor(place_of_residence)), width = 1/12) +
+OD_work_alluvial = ggplot(work_OD_plot_reorder_rmspecial, aes(y = N_workers, axis1 = place_of_residence, axis2 = place_of_work)) +
+  geom_alluvium(aes(fill = residence_area), width = 1/12) +
   geom_stratum(width = 1/12, fill = "#EEEEEE", color = "grey") +
   geom_text(stat = "stratum", aes(label = after_stat(stratum)), size = 2) +
+  scale_fill_brewer(type = "qual", palette = "Set1") +
+  theme_void() +
   theme(
     legend.position = "None"
   )
