@@ -1,0 +1,415 @@
+﻿Place of residence,Place of Work,Number of Persons
+Central and Western,Central and Western,48647
+Central and Western,Wan Chai,19244
+Central and Western,Eastern,42452
+Central and Western,Southern,24074
+Central and Western,Yau Tsim Mong,20439
+Central and Western,Sham Shui Po,17157
+Central and Western,Kowloon City,18213
+Central and Western,Wong Tai Sin,13289
+Central and Western,Kwun Tong,22096
+Central and Western,Kwai Tsing,15852
+Central and Western,Tsuen Wan,12593
+Central and Western,Tuen Mun,12330
+Central and Western,Yuen Long,16149
+Central and Western,North,5551
+Central and Western,Tai Po,7775
+Central and Western,Sha Tin,19657
+Central and Western,Sai Kung,21542
+Central and Western,Islands,9399
+Wan Chai,Central and Western,12938
+Wan Chai,Wan Chai,21861
+Wan Chai,Eastern,37655
+Wan Chai,Southern,16625
+Wan Chai,Yau Tsim Mong,11265
+Wan Chai,Sham Shui Po,12851
+Wan Chai,Kowloon City,13563
+Wan Chai,Wong Tai Sin,11885
+Wan Chai,Kwun Tong,22361
+Wan Chai,Kwai Tsing,12691
+Wan Chai,Tsuen Wan,8762
+Wan Chai,Tuen Mun,9561
+Wan Chai,Yuen Long,11223
+Wan Chai,North,5128
+Wan Chai,Tai Po,6256
+Wan Chai,Sha Tin,17519
+Wan Chai,Sai Kung,18120
+Wan Chai,Islands,4605
+Eastern,Central and Western,8161
+Eastern,Wan Chai,8735
+Eastern,Eastern,65803
+Eastern,Southern,8887
+Eastern,Yau Tsim Mong,5913
+Eastern,Sham Shui Po,7353
+Eastern,Kowloon City,8566
+Eastern,Wong Tai Sin,8829
+Eastern,Kwun Tong,19359
+Eastern,Kwai Tsing,6468
+Eastern,Tsuen Wan,4914
+Eastern,Tuen Mun,4998
+Eastern,Yuen Long,5862
+Eastern,North,3033
+Eastern,Tai Po,3783
+Eastern,Sha Tin,11583
+Eastern,Sai Kung,19077
+Eastern,Islands,2546
+Southern,Central and Western,4793
+Southern,Wan Chai,2503
+Southern,Eastern,8398
+Southern,Southern,28882
+Southern,Yau Tsim Mong,2673
+Southern,Sham Shui Po,2539
+Southern,Kowloon City,2876
+Southern,Wong Tai Sin,2190
+Southern,Kwun Tong,4094
+Southern,Kwai Tsing,2282
+Southern,Tsuen Wan,1628
+Southern,Tuen Mun,1569
+Southern,Yuen Long,2216
+Southern,North,704
+Southern,Tai Po,829
+Southern,Sha Tin,2626
+Southern,Sai Kung,2736
+Southern,Islands,940
+Yau Tsim Mong,Central and Western,7692
+Yau Tsim Mong,Wan Chai,5537
+Yau Tsim Mong,Eastern,17009
+Yau Tsim Mong,Southern,7317
+Yau Tsim Mong,Yau Tsim Mong,47903
+Yau Tsim Mong,Sham Shui Po,27228
+Yau Tsim Mong,Kowloon City,29110
+Yau Tsim Mong,Wong Tai Sin,25749
+Yau Tsim Mong,Kwun Tong,32098
+Yau Tsim Mong,Kwai Tsing,23605
+Yau Tsim Mong,Tsuen Wan,13674
+Yau Tsim Mong,Tuen Mun,17327
+Yau Tsim Mong,Yuen Long,21404
+Yau Tsim Mong,North,12006
+Yau Tsim Mong,Tai Po,12856
+Yau Tsim Mong,Sha Tin,33266
+Yau Tsim Mong,Sai Kung,20058
+Yau Tsim Mong,Islands,4611
+Sham Shui Po,Central and Western,2274
+Sham Shui Po,Wan Chai,1708
+Sham Shui Po,Eastern,5627
+Sham Shui Po,Southern,2145
+Sham Shui Po,Yau Tsim Mong,7372
+Sham Shui Po,Sham Shui Po,34057
+Sham Shui Po,Kowloon City,8386
+Sham Shui Po,Wong Tai Sin,10458
+Sham Shui Po,Kwun Tong,11870
+Sham Shui Po,Kwai Tsing,16369
+Sham Shui Po,Tsuen Wan,9006
+Sham Shui Po,Tuen Mun,10545
+Sham Shui Po,Yuen Long,10771
+Sham Shui Po,North,4566
+Sham Shui Po,Tai Po,5040
+Sham Shui Po,Sha Tin,13541
+Sham Shui Po,Sai Kung,7559
+Sham Shui Po,Islands,1940
+Kowloon City,Central and Western,1945
+Kowloon City,Wan Chai,1898
+Kowloon City,Eastern,5565
+Kowloon City,Southern,2528
+Kowloon City,Yau Tsim Mong,7009
+Kowloon City,Sham Shui Po,7683
+Kowloon City,Kowloon City,32143
+Kowloon City,Wong Tai Sin,13866
+Kowloon City,Kwun Tong,15832
+Kowloon City,Kwai Tsing,7046
+Kowloon City,Tsuen Wan,4745
+Kowloon City,Tuen Mun,4363
+Kowloon City,Yuen Long,6513
+Kowloon City,North,4238
+Kowloon City,Tai Po,4799
+Kowloon City,Sha Tin,13097
+Kowloon City,Sai Kung,8654
+Kowloon City,Islands,1072
+Wong Tai Sin,Central and Western,575
+Wong Tai Sin,Wan Chai,674
+Wong Tai Sin,Eastern,2023
+Wong Tai Sin,Southern,399
+Wong Tai Sin,Yau Tsim Mong,1779
+Wong Tai Sin,Sham Shui Po,2988
+Wong Tai Sin,Kowloon City,4637
+Wong Tai Sin,Wong Tai Sin,21938
+Wong Tai Sin,Kwun Tong,9016
+Wong Tai Sin,Kwai Tsing,2783
+Wong Tai Sin,Tsuen Wan,1811
+Wong Tai Sin,Tuen Mun,2087
+Wong Tai Sin,Yuen Long,2205
+Wong Tai Sin,North,1372
+Wong Tai Sin,Tai Po,1966
+Wong Tai Sin,Sha Tin,6456
+Wong Tai Sin,Sai Kung,5135
+Wong Tai Sin,Islands,325
+Kwun Tong,Central and Western,4319
+Kwun Tong,Wan Chai,4717
+Kwun Tong,Eastern,19097
+Kwun Tong,Southern,5217
+Kwun Tong,Yau Tsim Mong,9757
+Kwun Tong,Sham Shui Po,12426
+Kwun Tong,Kowloon City,17240
+Kwun Tong,Wong Tai Sin,24679
+Kwun Tong,Kwun Tong,69591
+Kwun Tong,Kwai Tsing,12956
+Kwun Tong,Tsuen Wan,8410
+Kwun Tong,Tuen Mun,10624
+Kwun Tong,Yuen Long,11786
+Kwun Tong,North,7906
+Kwun Tong,Tai Po,10379
+Kwun Tong,Sha Tin,25668
+Kwun Tong,Sai Kung,33847
+Kwun Tong,Islands,2364
+Tseung Kwan O New Town,Central and Western,469
+Tseung Kwan O New Town,Wan Chai,425
+Tseung Kwan O New Town,Eastern,2578
+Tseung Kwan O New Town,Southern,534
+Tseung Kwan O New Town,Yau Tsim Mong,898
+Tseung Kwan O New Town,Sham Shui Po,1632
+Tseung Kwan O New Town,Kowloon City,1924
+Tseung Kwan O New Town,Wong Tai Sin,3244
+Tseung Kwan O New Town,Kwun Tong,7721
+Tseung Kwan O New Town,Kwai Tsing,1635
+Tseung Kwan O New Town,Tsuen Wan,915
+Tseung Kwan O New Town,Tuen Mun,668
+Tseung Kwan O New Town,Yuen Long,930
+Tseung Kwan O New Town,North,509
+Tseung Kwan O New Town,Tai Po,1085
+Tseung Kwan O New Town,Sha Tin,2674
+Tseung Kwan O New Town,Sai Kung,20939
+Tseung Kwan O New Town,Islands,131
+Tsuen Wan New Town,Central and Western,1278
+Tsuen Wan New Town,Wan Chai,858
+Tsuen Wan New Town,Eastern,2423
+Tsuen Wan New Town,Southern,1038
+Tsuen Wan New Town,Yau Tsim Mong,3106
+Tsuen Wan New Town,Sham Shui Po,5263
+Tsuen Wan New Town,Kowloon City,3091
+Tsuen Wan New Town,Wong Tai Sin,3797
+Tsuen Wan New Town,Kwun Tong,4174
+Tsuen Wan New Town,Kwai Tsing,21536
+Tsuen Wan New Town,Tsuen Wan,27444
+Tsuen Wan New Town,Tuen Mun,11714
+Tsuen Wan New Town,Yuen Long,12454
+Tsuen Wan New Town,North,2462
+Tsuen Wan New Town,Tai Po,3413
+Tsuen Wan New Town,Sha Tin,7631
+Tsuen Wan New Town,Sai Kung,2795
+Tsuen Wan New Town,Islands,1240
+Tuen Mun New Town,Central and Western,815
+Tuen Mun New Town,Wan Chai,749
+Tuen Mun New Town,Eastern,1019
+Tuen Mun New Town,Southern,481
+Tuen Mun New Town,Yau Tsim Mong,1370
+Tuen Mun New Town,Sham Shui Po,1708
+Tuen Mun New Town,Kowloon City,1166
+Tuen Mun New Town,Wong Tai Sin,1400
+Tuen Mun New Town,Kwun Tong,1437
+Tuen Mun New Town,Kwai Tsing,2865
+Tuen Mun New Town,Tsuen Wan,2717
+Tuen Mun New Town,Tuen Mun,55400
+Tuen Mun New Town,Yuen Long,22157
+Tuen Mun New Town,North,1977
+Tuen Mun New Town,Tai Po,840
+Tuen Mun New Town,Sha Tin,2129
+Tuen Mun New Town,Sai Kung,725
+Tuen Mun New Town,Islands,389
+Yuen Long New Town,Central and Western,337
+Yuen Long New Town,Wan Chai,132
+Yuen Long New Town,Eastern,542
+Yuen Long New Town,Southern,196
+Yuen Long New Town,Yau Tsim Mong,467
+Yuen Long New Town,Sham Shui Po,1113
+Yuen Long New Town,Kowloon City,685
+Yuen Long New Town,Wong Tai Sin,686
+Yuen Long New Town,Kwun Tong,943
+Yuen Long New Town,Kwai Tsing,1689
+Yuen Long New Town,Tsuen Wan,1195
+Yuen Long New Town,Tuen Mun,8452
+Yuen Long New Town,Yuen Long,31594
+Yuen Long New Town,North,2276
+Yuen Long New Town,Tai Po,1029
+Yuen Long New Town,Sha Tin,959
+Yuen Long New Town,Sai Kung,261
+Yuen Long New Town,Islands,124
+Tin Shui Wai New Town,Central and Western,70
+Tin Shui Wai New Town,Wan Chai,114
+Tin Shui Wai New Town,Eastern,240
+Tin Shui Wai New Town,Southern,30
+Tin Shui Wai New Town,Yau Tsim Mong,178
+Tin Shui Wai New Town,Sham Shui Po,353
+Tin Shui Wai New Town,Kowloon City,206
+Tin Shui Wai New Town,Wong Tai Sin,134
+Tin Shui Wai New Town,Kwun Tong,235
+Tin Shui Wai New Town,Kwai Tsing,427
+Tin Shui Wai New Town,Tsuen Wan,428
+Tin Shui Wai New Town,Tuen Mun,3408
+Tin Shui Wai New Town,Yuen Long,16016
+Tin Shui Wai New Town,North,452
+Tin Shui Wai New Town,Tai Po,182
+Tin Shui Wai New Town,Sha Tin,292
+Tin Shui Wai New Town,Sai Kung,112
+Tin Shui Wai New Town,Islands,18
+Fanling/ Sheung Shui New Town,Central and Western,217
+Fanling/ Sheung Shui New Town,Wan Chai,169
+Fanling/ Sheung Shui New Town,Eastern,533
+Fanling/ Sheung Shui New Town,Southern,146
+Fanling/ Sheung Shui New Town,Yau Tsim Mong,421
+Fanling/ Sheung Shui New Town,Sham Shui Po,749
+Fanling/ Sheung Shui New Town,Kowloon City,814
+Fanling/ Sheung Shui New Town,Wong Tai Sin,702
+Fanling/ Sheung Shui New Town,Kwun Tong,990
+Fanling/ Sheung Shui New Town,Kwai Tsing,790
+Fanling/ Sheung Shui New Town,Tsuen Wan,862
+Fanling/ Sheung Shui New Town,Tuen Mun,2369
+Fanling/ Sheung Shui New Town,Yuen Long,4416
+Fanling/ Sheung Shui New Town,North,26187
+Fanling/ Sheung Shui New Town,Tai Po,4089
+Fanling/ Sheung Shui New Town,Sha Tin,3759
+Fanling/ Sheung Shui New Town,Sai Kung,922
+Fanling/ Sheung Shui New Town,Islands,193
+Tai Po New Town,Central and Western,706
+Tai Po New Town,Wan Chai,567
+Tai Po New Town,Eastern,1397
+Tai Po New Town,Southern,325
+Tai Po New Town,Yau Tsim Mong,1269
+Tai Po New Town,Sham Shui Po,1863
+Tai Po New Town,Kowloon City,2477
+Tai Po New Town,Wong Tai Sin,2121
+Tai Po New Town,Kwun Tong,2588
+Tai Po New Town,Kwai Tsing,2048
+Tai Po New Town,Tsuen Wan,1938
+Tai Po New Town,Tuen Mun,1838
+Tai Po New Town,Yuen Long,3904
+Tai Po New Town,North,9499
+Tai Po New Town,Tai Po,28160
+Tai Po New Town,Sha Tin,8689
+Tai Po New Town,Sai Kung,2113
+Tai Po New Town,Islands,293
+Sha Tin New Town,Central and Western,1053
+Sha Tin New Town,Wan Chai,889
+Sha Tin New Town,Eastern,3613
+Sha Tin New Town,Southern,1440
+Sha Tin New Town,Yau Tsim Mong,3449
+Sha Tin New Town,Sham Shui Po,4213
+Sha Tin New Town,Kowloon City,5126
+Sha Tin New Town,Wong Tai Sin,6277
+Sha Tin New Town,Kwun Tong,6890
+Sha Tin New Town,Kwai Tsing,5882
+Sha Tin New Town,Tsuen Wan,4456
+Sha Tin New Town,Tuen Mun,3885
+Sha Tin New Town,Yuen Long,5794
+Sha Tin New Town,North,10913
+Sha Tin New Town,Tai Po,10906
+Sha Tin New Town,Sha Tin,51378
+Sha Tin New Town,Sai Kung,4957
+Sha Tin New Town,Islands,697
+Ma On Shan New Town,Central and Western,32
+Ma On Shan New Town,Wan Chai,67
+Ma On Shan New Town,Eastern,243
+Ma On Shan New Town,Southern,78
+Ma On Shan New Town,Yau Tsim Mong,177
+Ma On Shan New Town,Sham Shui Po,246
+Ma On Shan New Town,Kowloon City,255
+Ma On Shan New Town,Wong Tai Sin,580
+Ma On Shan New Town,Kwun Tong,453
+Ma On Shan New Town,Kwai Tsing,483
+Ma On Shan New Town,Tsuen Wan,205
+Ma On Shan New Town,Tuen Mun,266
+Ma On Shan New Town,Yuen Long,223
+Ma On Shan New Town,North,745
+Ma On Shan New Town,Tai Po,1012
+Ma On Shan New Town,Sha Tin,10383
+Ma On Shan New Town,Sai Kung,473
+Ma On Shan New Town,Islands,39
+Kwai Chung New Town,Central and Western,1961
+Kwai Chung New Town,Wan Chai,1210
+Kwai Chung New Town,Eastern,3774
+Kwai Chung New Town,Southern,1590
+Kwai Chung New Town,Yau Tsim Mong,4797
+Kwai Chung New Town,Sham Shui Po,9227
+Kwai Chung New Town,Kowloon City,5056
+Kwai Chung New Town,Wong Tai Sin,6309
+Kwai Chung New Town,Kwun Tong,6871
+Kwai Chung New Town,Kwai Tsing,38999
+Kwai Chung New Town,Tsuen Wan,14240
+Kwai Chung New Town,Tuen Mun,12235
+Kwai Chung New Town,Yuen Long,11477
+Kwai Chung New Town,North,3133
+Kwai Chung New Town,Tai Po,3962
+Kwai Chung New Town,Sha Tin,10923
+Kwai Chung New Town,Sai Kung,4879
+Kwai Chung New Town,Islands,2076
+Tsing Yi New Town,Central and Western,358
+Tsing Yi New Town,Wan Chai,279
+Tsing Yi New Town,Eastern,1057
+Tsing Yi New Town,Southern,379
+Tsing Yi New Town,Yau Tsim Mong,771
+Tsing Yi New Town,Sham Shui Po,1423
+Tsing Yi New Town,Kowloon City,1062
+Tsing Yi New Town,Wong Tai Sin,1456
+Tsing Yi New Town,Kwun Tong,1494
+Tsing Yi New Town,Kwai Tsing,12173
+Tsing Yi New Town,Tsuen Wan,2081
+Tsing Yi New Town,Tuen Mun,2110
+Tsing Yi New Town,Yuen Long,2397
+Tsing Yi New Town,North,992
+Tsing Yi New Town,Tai Po,651
+Tsing Yi New Town,Sha Tin,1828
+Tsing Yi New Town,Sai Kung,920
+Tsing Yi New Town,Islands,679
+North Lantau New Town,Central and Western,205
+North Lantau New Town,Wan Chai,81
+North Lantau New Town,Eastern,257
+North Lantau New Town,Southern,67
+North Lantau New Town,Yau Tsim Mong,460
+North Lantau New Town,Sham Shui Po,839
+North Lantau New Town,Kowloon City,358
+North Lantau New Town,Wong Tai Sin,357
+North Lantau New Town,Kwun Tong,623
+North Lantau New Town,Kwai Tsing,1838
+North Lantau New Town,Tsuen Wan,747
+North Lantau New Town,Tuen Mun,1036
+North Lantau New Town,Yuen Long,815
+North Lantau New Town,North,326
+North Lantau New Town,Tai Po,284
+North Lantau New Town,Sha Tin,637
+North Lantau New Town,Sai Kung,122
+North Lantau New Town,Islands,3898
+Other areas in the New Territories,Central and Western,2196
+Other areas in the New Territories,Wan Chai,1314
+Other areas in the New Territories,Eastern,4509
+Other areas in the New Territories,Southern,2529
+Other areas in the New Territories,Yau Tsim Mong,4479
+Other areas in the New Territories,Sham Shui Po,5342
+Other areas in the New Territories,Kowloon City,5029
+Other areas in the New Territories,Wong Tai Sin,6621
+Other areas in the New Territories,Kwun Tong,8920
+Other areas in the New Territories,Kwai Tsing,12333
+Other areas in the New Territories,Tsuen Wan,6141
+Other areas in the New Territories,Tuen Mun,14654
+Other areas in the New Territories,Yuen Long,26201
+Other areas in the New Territories,North,10291
+Other areas in the New Territories,Tai Po,5379
+Other areas in the New Territories,Sha Tin,11218
+Other areas in the New Territories,Sai Kung,11296
+Other areas in the New Territories,Islands,20865
+No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,Central and Western,38493
+No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,Wan Chai,32278
+No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,Eastern,70559
+No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,Southern,38424
+No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,Yau Tsim Mong,47132
+No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,Sham Shui Po,47312
+No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,Kowloon City,55241
+No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,Wong Tai Sin,42710
+No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,Kwun Tong,65921
+No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,Kwai Tsing,56677
+No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,Tsuen Wan,39874
+No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,Tuen Mun,53895
+No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,Yuen Long,75169
+No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,North,36320
+No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,Tai Po,39149
+No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,Sha Tin,79289
+No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,Sai Kung,58090
+No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,Islands,21371
