@@ -49,7 +49,7 @@ work_OD_differentiate = work_OD_order %>%
   mutate(place_of_work_e = paste0(place_of_work, " "))
 
 # drop factor levels
-origin_list = as.character(unique(work_OD_differentiate$place_of_residence))
+origin_list = as.character(unique(work_OD_differentiate$place_of_residence)) 
 destination_list = unique(work_OD_differentiate$place_of_work_e)
 
 # Create node ID including all origin and destination nodes
@@ -104,7 +104,7 @@ OD_work_alluvial = ggplot(work_OD_plot_reorder_rmspecial, aes(y = N_workers, axi
     legend.position = "None"
   ) +
   labs(
-    title = "OD",
+    title = "",
     subtitle = "Place of residence and work of commuters in Hong Kong",
     caption = "Note: workers with no fixed places of work in Hong Kong or work in Marine/at home/places outside Hong Kong are excluded."
   )
@@ -196,30 +196,43 @@ brewer.pal(n = 5, "Set1")
 
 
 ```{r}
-# add colour code
-
-work_OD_plot_reorder_KT_plotly = work_OD_plot_reorder_KT_char %>%
+# add colour code for links
+work_OD_plot_reorder_plotly = work_OD_plot_reorder %>%
   mutate(
     link_colour = case_when(
-      residence_area == "HKI" ~ "#E41A1C",
-      residence_area == "KL" ~ "#4DAF4A",
-      residence_area == "NTW" ~ "#FF7F00",
-      residence_area == "NTE" ~ "#984EA3",
-      residence_area == "I" ~ "#377EB8"
+      residence_area == "HKI" ~ "#E41A1C33",
+      residence_area == "KL" ~ "#4DAF4A33",
+      residence_area == "NTW" ~ "#FF7F0033",
+      residence_area == "NTE" ~ "#984EA333",
+      residence_area == "I" ~ "#377EB833"
     )
   )
 
-  mutate(
-    link_colour = case_when(
-      residence_area == "HKI" ~ 'rgba(0,255,255,0.4)',
-      residence_area == "KL" ~ 'rgba(255,0,255,0.4)',
-      residence_area == "NTW" ~ 'rgba(0,255,0,0.4)',
-      residence_area == "NTE" ~ 'rgba(255,255, 0, 0.4)',
-      residence_area == "I" ~ 'rgba(255,0,0,0.4)'
-    )
-  )
+work_OD_plot_reorder_plotly_rmspecial = work_OD_plot_reorder_plotly %>%
+  subset(place_of_work != "No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong")
+
+work_OD_plot_reorder_plotly_KT = work_OD_plot_reorder_plotly %>%
+  subset(place_of_work == "Kwun Tong")
+
+work_OD_plot_reorder_plotly_fromHKI = work_OD_plot_reorder_plotly %>%
+  subset(residence_area == "HKI")
+
+
 ```
 
+```{r}
+node_y = c(seq(.01, 1, length.out = length(DISTRICT_ORDER)), seq(.01, 1, length.out	= length(WORKPLACE_ORDER)))
+
+# nudged x-axis position for plotly
+node_x_nudge = c(seq(0.01, length.out = length(DISTRICT_ORDER), by = 0.01), rev(seq(1, length.out = length(WORKPLACE_ORDER), by = -0.01)))
+
+nodes_OD_wposition = nodes_OD %>%
+  bind_cols(
+    node_y = node_y,
+    node_x_nudge = node_x_nudge) %>%
+  mutate(node_x = ifelse(node_ID <= 17, 0, 1))
+  
+```
 
 
 
@@ -229,7 +242,10 @@ fig <- plot_ly(
     orientation = "h",
 
     node = list(
-      label = nodes_OD[["node_name"]],
+      label = nodes_OD_wposition[["node_name"]],
+      x = nodes_OD_wposition[["node_x"]],
+      y = nodes_OD_wposition[["node_y"]],
+      color = "#666666",
       pad = 15,
       thickness = 20,
       line = list(
@@ -239,10 +255,10 @@ fig <- plot_ly(
     ),
 
     link = list(
-      source = work_OD_plot_reorder_KT_plotly[["IDsource"]],
-      target = work_OD_plot_reorder_KT_plotly[["IDtarget"]],
-      value = work_OD_plot_reorder_KT_plotly[["value"]],
-      color = work_OD_plot_reorder_KT_plotly[["link_colour"]]
+      source = work_OD_plot_reorder_plotly[["origin_ID"]],
+      target = work_OD_plot_reorder_plotly[["destination_ID"]],
+      value = work_OD_plot_reorder_plotly[["N_workers"]],
+      color = work_OD_plot_reorder_plotly[["link_colour"]]
       # color = "#00FF00"
 
     )
@@ -256,5 +272,236 @@ fig <- fig %>% layout(
 )
 
 fig
+```
+
+```{r}
+fig_fromHKI <- plot_ly(
+    type = "sankey",
+    orientation = "h",
+
+    node = list(
+      label = nodes_OD[["node_name"]],
+      color = "#666666",
+      pad = 15,
+      thickness = 20,
+      line = list(
+        color = "black",
+        width = 0.5
+      )
+    ),
+
+    link = list(
+      source = work_OD_plot_reorder_plotly_rmspecial[["origin_ID"]],
+      target = work_OD_plot_reorder_plotly_rmspecial[["destination_ID"]],
+      value = work_OD_plot_reorder_plotly_rmspecial[["N_workers"]],
+      color = work_OD_plot_reorder_plotly_rmspecial[["link_colour"]]
+      # color = "#00FF00"
+
+    )
+  )
+
+fig_fromHKI <- fig_fromHKI %>% layout(
+    title = "Basic Sankey Diagram",
+    font = list(
+      size = 10
+    )
+)
+
+fig_fromHKI
+```
+
+
+```{r}
+
+fig_fromHKI <- plot_ly(
+    type = "sankey",
+    arrangement = "snap",
+    orientation = "h",
+
+    node = list(
+      label = nodes_OD_wposition[["node_name"]],
+      x = nodes_OD_wposition[["node_x"]],
+      y = nodes_OD_wposition[["node_y_manual"]],
+      color = "#666666",
+      pad = 15,
+      thickness = 20,
+      line = list(
+        color = "black",
+        width = 0.5
+      )
+    ),
+
+    link = list(
+      source = work_OD_plot_reorder_plotly_fromHKI[["origin_ID"]],
+      target = work_OD_plot_reorder_plotly_fromHKI[["destination_ID"]],
+      value = work_OD_plot_reorder_plotly_fromHKI[["N_workers"]],
+      color = work_OD_plot_reorder_plotly_fromHKI[["link_colour"]]
+      # color = "#00FF00"
+
+    )
+  )
+
+fig_fromHKI_layout <- fig_fromHKI %>% layout(
+    title = "Basic Sankey Diagram",
+    font = list(
+      size = 10
+    )
+)
+
+fig_fromHKI_layout
+```
+
+```{r}
+nodes_OD_fromtoHKI = nodes_OD_wposition %>%
+  filter(node_ID <=3 | (node_ID >= 18 & node_ID <= 21))
+
+work_OD_plot_reorder_plotly_fromtoHKI = work_OD_plot_reorder_plotly %>%
+  dplyr::filter(residence_area == "HKI" & (destination_ID >= 18 & destination_ID <= 21) ) %>%
+  mutate(destination_ID = ifelse(destination_ID > 3, destination_ID - 14, destination_ID))
+```
+
+
+```{r}
+
+fig_fromtoHKI <- plot_ly(
+    type = "sankey",
+    arrangement = "snap",
+    orientation = "h",
+
+    node = list(
+      label = nodes_OD_wposition[["node_name"]],
+      x = nodes_OD_wposition[["node_x_nudge"]],
+      y = nodes_OD_wposition[["node_y"]],
+      color = "#666666",
+      pad = 15,
+      thickness = 20,
+      line = list(
+        color = "black",
+        width = 0.5
+      )
+    ),
+
+    link = list(
+      source = work_OD_plot_reorder_plotly_fromtoHKI[["origin_ID"]],
+      target = work_OD_plot_reorder_plotly_fromtoHKI[["destination_ID"]],
+      value = work_OD_plot_reorder_plotly_fromtoHKI[["N_workers"]],
+      color = work_OD_plot_reorder_plotly_fromtoHKI[["link_colour"]]
+      # color = "#00FF00"
+
+    )
+  )
+
+fig_fromtoHKI_layout <- fig_fromtoHKI %>% layout(
+    title = "Basic Sankey Diagram",
+    font = list(
+      size = 10
+    )
+)
+
+fig_fromtoHKI_layout
+```
+
+
+```{r}
+library(plotly)
+fig <- plot_ly(
+  type = "sankey",
+  arrangement = "snap",
+  node = list(
+    label = c("A", "B", "C", "D", "E", "F"),
+    x = c(0.2, 0.1, 0.5, 0.7, 0.3, 0.5),
+    y = c(0.7, 0.5, 0.2, 0.4, 0.2, 0.3),
+    pad = 10), # 10 Pixel
+  link = list(
+    source = c(0, 0, 1, 2, 5, 4, 3, 5),
+    target = c(5, 3, 4, 3, 0, 2, 2, 3),
+    value = c(1, 2, 1, 1, 1, 1, 1, 2)))
+fig <- fig %>% layout(title = "Sankey with manually positioned node")
+
+fig
+```
+
+
+
+```{r}
+work_OD_plot_reorder_plotly_toKT = work_OD_plot_reorder_plotly %>%
+  subset(place_of_work == "Kwun Tong")
+```
+
+```{r}
+
+fig_toKT <- plot_ly(
+    type = "sankey",
+    arrangement = "snap",
+    orientation = "h",
+
+    node = list(
+      label = nodes_OD_wposition[["node_name"]],
+      x = nodes_OD_wposition[["node_x_nudge"]],
+      y = nodes_OD_wposition[["node_y"]],
+      color = "#666666",
+      pad = 15,
+      thickness = 20,
+      line = list(
+        color = "black",
+        width = 0.5
+      )
+    ),
+
+    link = list(
+      source = work_OD_plot_reorder_plotly_toKT[["origin_ID"]],
+      target = work_OD_plot_reorder_plotly_toKT[["destination_ID"]],
+      value = work_OD_plot_reorder_plotly_toKT[["N_workers"]],
+      color = work_OD_plot_reorder_plotly_toKT[["link_colour"]]
+      # color = "#00FF00"
+
+    )
+  )
+
+fig_toKT_layout <- fig_toKT %>% layout(
+    title = "Basic Sankey Diagram",
+    font = list(
+      size = 10
+    )
+)
+
+fig_toKT_layout
+```
+
+
+
+
+
+
+
+```{r}
+
+fig_test <- plot_ly(
+    type = "sankey",
+    # arrangement = "snap",
+    orientation = "h",
+
+    node = list(
+      label = c("A", "B", "C", "D", "E", "F", "G", "H"),
+      x = c(0, 0.01, 0, 0, 1, 1, 1, 1),
+      y = c(0, .33, .66, 1, 0, .33, .66, 1),
+      pad = 10
+    ),
+
+    link = list(
+      source = c(0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3),
+      target = c(4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7),
+      value = c(48647, 19244, 42452, 24074, 12938, 21861, 37655, 16625, 8161, 8735, 65803, 8887, 4793, 2503, 8398, 28882)
+    )
+  )
+
+fig_test <- fig_test %>% layout(
+    title = "Basic Sankey Diagram",
+    font = list(
+      size = 10
+    )
+)
+
+fig_test
 ```
 
