@@ -1,0 +1,415 @@
+﻿place_of_residence,place_of_work,N_workers,place_of_residence_chi,place_of_work_chi
+Central and Western,Central and Western,48647,中西區,中西區
+Wan Chai,Central and Western,19244,灣仔,中西區
+Eastern,Central and Western,42452,東區,中西區
+Southern,Central and Western,24074,南區,中西區
+Yau Tsim Mong,Central and Western,20439,油尖旺,中西區
+Sham Shui Po,Central and Western,17157,深水埗,中西區
+Kowloon City,Central and Western,18213,九龍城,中西區
+Wong Tai Sin,Central and Western,13289,黃大仙,中西區
+Kwun Tong,Central and Western,22096,觀塘,中西區
+Kwai Tsing,Central and Western,15852,葵青,中西區
+Tsuen Wan,Central and Western,12593,荃灣,中西區
+Tuen Mun,Central and Western,12330,屯門,中西區
+Yuen Long,Central and Western,16149,元朗,中西區
+North,Central and Western,5551,北區,中西區
+Tai Po,Central and Western,7775,大埔,中西區
+Sha Tin,Central and Western,19657,沙田,中西區
+Sai Kung,Central and Western,21542,西貢,中西區
+Islands,Central and Western,9399,離島,中西區
+Central and Western,Wan Chai,12938,中西區,灣仔
+Wan Chai,Wan Chai,21861,灣仔,灣仔
+Eastern,Wan Chai,37655,東區,灣仔
+Southern,Wan Chai,16625,南區,灣仔
+Yau Tsim Mong,Wan Chai,11265,油尖旺,灣仔
+Sham Shui Po,Wan Chai,12851,深水埗,灣仔
+Kowloon City,Wan Chai,13563,九龍城,灣仔
+Wong Tai Sin,Wan Chai,11885,黃大仙,灣仔
+Kwun Tong,Wan Chai,22361,觀塘,灣仔
+Kwai Tsing,Wan Chai,12691,葵青,灣仔
+Tsuen Wan,Wan Chai,8762,荃灣,灣仔
+Tuen Mun,Wan Chai,9561,屯門,灣仔
+Yuen Long,Wan Chai,11223,元朗,灣仔
+North,Wan Chai,5128,北區,灣仔
+Tai Po,Wan Chai,6256,大埔,灣仔
+Sha Tin,Wan Chai,17519,沙田,灣仔
+Sai Kung,Wan Chai,18120,西貢,灣仔
+Islands,Wan Chai,4605,離島,灣仔
+Central and Western,Eastern,8161,中西區,東區
+Wan Chai,Eastern,8735,灣仔,東區
+Eastern,Eastern,65803,東區,東區
+Southern,Eastern,8887,南區,東區
+Yau Tsim Mong,Eastern,5913,油尖旺,東區
+Sham Shui Po,Eastern,7353,深水埗,東區
+Kowloon City,Eastern,8566,九龍城,東區
+Wong Tai Sin,Eastern,8829,黃大仙,東區
+Kwun Tong,Eastern,19359,觀塘,東區
+Kwai Tsing,Eastern,6468,葵青,東區
+Tsuen Wan,Eastern,4914,荃灣,東區
+Tuen Mun,Eastern,4998,屯門,東區
+Yuen Long,Eastern,5862,元朗,東區
+North,Eastern,3033,北區,東區
+Tai Po,Eastern,3783,大埔,東區
+Sha Tin,Eastern,11583,沙田,東區
+Sai Kung,Eastern,19077,西貢,東區
+Islands,Eastern,2546,離島,東區
+Central and Western,Southern,4793,中西區,南區
+Wan Chai,Southern,2503,灣仔,南區
+Eastern,Southern,8398,東區,南區
+Southern,Southern,28882,南區,南區
+Yau Tsim Mong,Southern,2673,油尖旺,南區
+Sham Shui Po,Southern,2539,深水埗,南區
+Kowloon City,Southern,2876,九龍城,南區
+Wong Tai Sin,Southern,2190,黃大仙,南區
+Kwun Tong,Southern,4094,觀塘,南區
+Kwai Tsing,Southern,2282,葵青,南區
+Tsuen Wan,Southern,1628,荃灣,南區
+Tuen Mun,Southern,1569,屯門,南區
+Yuen Long,Southern,2216,元朗,南區
+North,Southern,704,北區,南區
+Tai Po,Southern,829,大埔,南區
+Sha Tin,Southern,2626,沙田,南區
+Sai Kung,Southern,2736,西貢,南區
+Islands,Southern,940,離島,南區
+Central and Western,Yau Tsim Mong,7692,中西區,油尖旺
+Wan Chai,Yau Tsim Mong,5537,灣仔,油尖旺
+Eastern,Yau Tsim Mong,17009,東區,油尖旺
+Southern,Yau Tsim Mong,7317,南區,油尖旺
+Yau Tsim Mong,Yau Tsim Mong,47903,油尖旺,油尖旺
+Sham Shui Po,Yau Tsim Mong,27228,深水埗,油尖旺
+Kowloon City,Yau Tsim Mong,29110,九龍城,油尖旺
+Wong Tai Sin,Yau Tsim Mong,25749,黃大仙,油尖旺
+Kwun Tong,Yau Tsim Mong,32098,觀塘,油尖旺
+Kwai Tsing,Yau Tsim Mong,23605,葵青,油尖旺
+Tsuen Wan,Yau Tsim Mong,13674,荃灣,油尖旺
+Tuen Mun,Yau Tsim Mong,17327,屯門,油尖旺
+Yuen Long,Yau Tsim Mong,21404,元朗,油尖旺
+North,Yau Tsim Mong,12006,北區,油尖旺
+Tai Po,Yau Tsim Mong,12856,大埔,油尖旺
+Sha Tin,Yau Tsim Mong,33266,沙田,油尖旺
+Sai Kung,Yau Tsim Mong,20058,西貢,油尖旺
+Islands,Yau Tsim Mong,4611,離島,油尖旺
+Central and Western,Sham Shui Po,2274,中西區,深水埗
+Wan Chai,Sham Shui Po,1708,灣仔,深水埗
+Eastern,Sham Shui Po,5627,東區,深水埗
+Southern,Sham Shui Po,2145,南區,深水埗
+Yau Tsim Mong,Sham Shui Po,7372,油尖旺,深水埗
+Sham Shui Po,Sham Shui Po,34057,深水埗,深水埗
+Kowloon City,Sham Shui Po,8386,九龍城,深水埗
+Wong Tai Sin,Sham Shui Po,10458,黃大仙,深水埗
+Kwun Tong,Sham Shui Po,11870,觀塘,深水埗
+Kwai Tsing,Sham Shui Po,16369,葵青,深水埗
+Tsuen Wan,Sham Shui Po,9006,荃灣,深水埗
+Tuen Mun,Sham Shui Po,10545,屯門,深水埗
+Yuen Long,Sham Shui Po,10771,元朗,深水埗
+North,Sham Shui Po,4566,北區,深水埗
+Tai Po,Sham Shui Po,5040,大埔,深水埗
+Sha Tin,Sham Shui Po,13541,沙田,深水埗
+Sai Kung,Sham Shui Po,7559,西貢,深水埗
+Islands,Sham Shui Po,1940,離島,深水埗
+Central and Western,Kowloon City,1945,中西區,九龍城
+Wan Chai,Kowloon City,1898,灣仔,九龍城
+Eastern,Kowloon City,5565,東區,九龍城
+Southern,Kowloon City,2528,南區,九龍城
+Yau Tsim Mong,Kowloon City,7009,油尖旺,九龍城
+Sham Shui Po,Kowloon City,7683,深水埗,九龍城
+Kowloon City,Kowloon City,32143,九龍城,九龍城
+Wong Tai Sin,Kowloon City,13866,黃大仙,九龍城
+Kwun Tong,Kowloon City,15832,觀塘,九龍城
+Kwai Tsing,Kowloon City,7046,葵青,九龍城
+Tsuen Wan,Kowloon City,4745,荃灣,九龍城
+Tuen Mun,Kowloon City,4363,屯門,九龍城
+Yuen Long,Kowloon City,6513,元朗,九龍城
+North,Kowloon City,4238,北區,九龍城
+Tai Po,Kowloon City,4799,大埔,九龍城
+Sha Tin,Kowloon City,13097,沙田,九龍城
+Sai Kung,Kowloon City,8654,西貢,九龍城
+Islands,Kowloon City,1072,離島,九龍城
+Central and Western,Wong Tai Sin,575,中西區,黃大仙
+Wan Chai,Wong Tai Sin,674,灣仔,黃大仙
+Eastern,Wong Tai Sin,2023,東區,黃大仙
+Southern,Wong Tai Sin,399,南區,黃大仙
+Yau Tsim Mong,Wong Tai Sin,1779,油尖旺,黃大仙
+Sham Shui Po,Wong Tai Sin,2988,深水埗,黃大仙
+Kowloon City,Wong Tai Sin,4637,九龍城,黃大仙
+Wong Tai Sin,Wong Tai Sin,21938,黃大仙,黃大仙
+Kwun Tong,Wong Tai Sin,9016,觀塘,黃大仙
+Kwai Tsing,Wong Tai Sin,2783,葵青,黃大仙
+Tsuen Wan,Wong Tai Sin,1811,荃灣,黃大仙
+Tuen Mun,Wong Tai Sin,2087,屯門,黃大仙
+Yuen Long,Wong Tai Sin,2205,元朗,黃大仙
+North,Wong Tai Sin,1372,北區,黃大仙
+Tai Po,Wong Tai Sin,1966,大埔,黃大仙
+Sha Tin,Wong Tai Sin,6456,沙田,黃大仙
+Sai Kung,Wong Tai Sin,5135,西貢,黃大仙
+Islands,Wong Tai Sin,325,離島,黃大仙
+Central and Western,Kwun Tong,4319,中西區,觀塘
+Wan Chai,Kwun Tong,4717,灣仔,觀塘
+Eastern,Kwun Tong,19097,東區,觀塘
+Southern,Kwun Tong,5217,南區,觀塘
+Yau Tsim Mong,Kwun Tong,9757,油尖旺,觀塘
+Sham Shui Po,Kwun Tong,12426,深水埗,觀塘
+Kowloon City,Kwun Tong,17240,九龍城,觀塘
+Wong Tai Sin,Kwun Tong,24679,黃大仙,觀塘
+Kwun Tong,Kwun Tong,69591,觀塘,觀塘
+Kwai Tsing,Kwun Tong,12956,葵青,觀塘
+Tsuen Wan,Kwun Tong,8410,荃灣,觀塘
+Tuen Mun,Kwun Tong,10624,屯門,觀塘
+Yuen Long,Kwun Tong,11786,元朗,觀塘
+North,Kwun Tong,7906,北區,觀塘
+Tai Po,Kwun Tong,10379,大埔,觀塘
+Sha Tin,Kwun Tong,25668,沙田,觀塘
+Sai Kung,Kwun Tong,33847,西貢,觀塘
+Islands,Kwun Tong,2364,離島,觀塘
+Central and Western,Tseung Kwan O New Town,469,中西區,將軍澳新市鎮
+Wan Chai,Tseung Kwan O New Town,425,灣仔,將軍澳新市鎮
+Eastern,Tseung Kwan O New Town,2578,東區,將軍澳新市鎮
+Southern,Tseung Kwan O New Town,534,南區,將軍澳新市鎮
+Yau Tsim Mong,Tseung Kwan O New Town,898,油尖旺,將軍澳新市鎮
+Sham Shui Po,Tseung Kwan O New Town,1632,深水埗,將軍澳新市鎮
+Kowloon City,Tseung Kwan O New Town,1924,九龍城,將軍澳新市鎮
+Wong Tai Sin,Tseung Kwan O New Town,3244,黃大仙,將軍澳新市鎮
+Kwun Tong,Tseung Kwan O New Town,7721,觀塘,將軍澳新市鎮
+Kwai Tsing,Tseung Kwan O New Town,1635,葵青,將軍澳新市鎮
+Tsuen Wan,Tseung Kwan O New Town,915,荃灣,將軍澳新市鎮
+Tuen Mun,Tseung Kwan O New Town,668,屯門,將軍澳新市鎮
+Yuen Long,Tseung Kwan O New Town,930,元朗,將軍澳新市鎮
+North,Tseung Kwan O New Town,509,北區,將軍澳新市鎮
+Tai Po,Tseung Kwan O New Town,1085,大埔,將軍澳新市鎮
+Sha Tin,Tseung Kwan O New Town,2674,沙田,將軍澳新市鎮
+Sai Kung,Tseung Kwan O New Town,20939,西貢,將軍澳新市鎮
+Islands,Tseung Kwan O New Town,131,離島,將軍澳新市鎮
+Central and Western,Tsuen Wan New Town,1278,中西區,荃灣新市鎮
+Wan Chai,Tsuen Wan New Town,858,灣仔,荃灣新市鎮
+Eastern,Tsuen Wan New Town,2423,東區,荃灣新市鎮
+Southern,Tsuen Wan New Town,1038,南區,荃灣新市鎮
+Yau Tsim Mong,Tsuen Wan New Town,3106,油尖旺,荃灣新市鎮
+Sham Shui Po,Tsuen Wan New Town,5263,深水埗,荃灣新市鎮
+Kowloon City,Tsuen Wan New Town,3091,九龍城,荃灣新市鎮
+Wong Tai Sin,Tsuen Wan New Town,3797,黃大仙,荃灣新市鎮
+Kwun Tong,Tsuen Wan New Town,4174,觀塘,荃灣新市鎮
+Kwai Tsing,Tsuen Wan New Town,21536,葵青,荃灣新市鎮
+Tsuen Wan,Tsuen Wan New Town,27444,荃灣,荃灣新市鎮
+Tuen Mun,Tsuen Wan New Town,11714,屯門,荃灣新市鎮
+Yuen Long,Tsuen Wan New Town,12454,元朗,荃灣新市鎮
+North,Tsuen Wan New Town,2462,北區,荃灣新市鎮
+Tai Po,Tsuen Wan New Town,3413,大埔,荃灣新市鎮
+Sha Tin,Tsuen Wan New Town,7631,沙田,荃灣新市鎮
+Sai Kung,Tsuen Wan New Town,2795,西貢,荃灣新市鎮
+Islands,Tsuen Wan New Town,1240,離島,荃灣新市鎮
+Central and Western,Tuen Mun New Town,815,中西區,屯門新市鎮
+Wan Chai,Tuen Mun New Town,749,灣仔,屯門新市鎮
+Eastern,Tuen Mun New Town,1019,東區,屯門新市鎮
+Southern,Tuen Mun New Town,481,南區,屯門新市鎮
+Yau Tsim Mong,Tuen Mun New Town,1370,油尖旺,屯門新市鎮
+Sham Shui Po,Tuen Mun New Town,1708,深水埗,屯門新市鎮
+Kowloon City,Tuen Mun New Town,1166,九龍城,屯門新市鎮
+Wong Tai Sin,Tuen Mun New Town,1400,黃大仙,屯門新市鎮
+Kwun Tong,Tuen Mun New Town,1437,觀塘,屯門新市鎮
+Kwai Tsing,Tuen Mun New Town,2865,葵青,屯門新市鎮
+Tsuen Wan,Tuen Mun New Town,2717,荃灣,屯門新市鎮
+Tuen Mun,Tuen Mun New Town,55400,屯門,屯門新市鎮
+Yuen Long,Tuen Mun New Town,22157,元朗,屯門新市鎮
+North,Tuen Mun New Town,1977,北區,屯門新市鎮
+Tai Po,Tuen Mun New Town,840,大埔,屯門新市鎮
+Sha Tin,Tuen Mun New Town,2129,沙田,屯門新市鎮
+Sai Kung,Tuen Mun New Town,725,西貢,屯門新市鎮
+Islands,Tuen Mun New Town,389,離島,屯門新市鎮
+Central and Western,Yuen Long New Town,337,中西區,元朗新市鎮
+Wan Chai,Yuen Long New Town,132,灣仔,元朗新市鎮
+Eastern,Yuen Long New Town,542,東區,元朗新市鎮
+Southern,Yuen Long New Town,196,南區,元朗新市鎮
+Yau Tsim Mong,Yuen Long New Town,467,油尖旺,元朗新市鎮
+Sham Shui Po,Yuen Long New Town,1113,深水埗,元朗新市鎮
+Kowloon City,Yuen Long New Town,685,九龍城,元朗新市鎮
+Wong Tai Sin,Yuen Long New Town,686,黃大仙,元朗新市鎮
+Kwun Tong,Yuen Long New Town,943,觀塘,元朗新市鎮
+Kwai Tsing,Yuen Long New Town,1689,葵青,元朗新市鎮
+Tsuen Wan,Yuen Long New Town,1195,荃灣,元朗新市鎮
+Tuen Mun,Yuen Long New Town,8452,屯門,元朗新市鎮
+Yuen Long,Yuen Long New Town,31594,元朗,元朗新市鎮
+North,Yuen Long New Town,2276,北區,元朗新市鎮
+Tai Po,Yuen Long New Town,1029,大埔,元朗新市鎮
+Sha Tin,Yuen Long New Town,959,沙田,元朗新市鎮
+Sai Kung,Yuen Long New Town,261,西貢,元朗新市鎮
+Islands,Yuen Long New Town,124,離島,元朗新市鎮
+Central and Western,Tin Shui Wai New Town,70,中西區,天水圍新市鎮
+Wan Chai,Tin Shui Wai New Town,114,灣仔,天水圍新市鎮
+Eastern,Tin Shui Wai New Town,240,東區,天水圍新市鎮
+Southern,Tin Shui Wai New Town,30,南區,天水圍新市鎮
+Yau Tsim Mong,Tin Shui Wai New Town,178,油尖旺,天水圍新市鎮
+Sham Shui Po,Tin Shui Wai New Town,353,深水埗,天水圍新市鎮
+Kowloon City,Tin Shui Wai New Town,206,九龍城,天水圍新市鎮
+Wong Tai Sin,Tin Shui Wai New Town,134,黃大仙,天水圍新市鎮
+Kwun Tong,Tin Shui Wai New Town,235,觀塘,天水圍新市鎮
+Kwai Tsing,Tin Shui Wai New Town,427,葵青,天水圍新市鎮
+Tsuen Wan,Tin Shui Wai New Town,428,荃灣,天水圍新市鎮
+Tuen Mun,Tin Shui Wai New Town,3408,屯門,天水圍新市鎮
+Yuen Long,Tin Shui Wai New Town,16016,元朗,天水圍新市鎮
+North,Tin Shui Wai New Town,452,北區,天水圍新市鎮
+Tai Po,Tin Shui Wai New Town,182,大埔,天水圍新市鎮
+Sha Tin,Tin Shui Wai New Town,292,沙田,天水圍新市鎮
+Sai Kung,Tin Shui Wai New Town,112,西貢,天水圍新市鎮
+Islands,Tin Shui Wai New Town,18,離島,天水圍新市鎮
+Central and Western,Fanling/ Sheung Shui New Town,217,中西區,粉嶺／上水新市鎮
+Wan Chai,Fanling/ Sheung Shui New Town,169,灣仔,粉嶺／上水新市鎮
+Eastern,Fanling/ Sheung Shui New Town,533,東區,粉嶺／上水新市鎮
+Southern,Fanling/ Sheung Shui New Town,146,南區,粉嶺／上水新市鎮
+Yau Tsim Mong,Fanling/ Sheung Shui New Town,421,油尖旺,粉嶺／上水新市鎮
+Sham Shui Po,Fanling/ Sheung Shui New Town,749,深水埗,粉嶺／上水新市鎮
+Kowloon City,Fanling/ Sheung Shui New Town,814,九龍城,粉嶺／上水新市鎮
+Wong Tai Sin,Fanling/ Sheung Shui New Town,702,黃大仙,粉嶺／上水新市鎮
+Kwun Tong,Fanling/ Sheung Shui New Town,990,觀塘,粉嶺／上水新市鎮
+Kwai Tsing,Fanling/ Sheung Shui New Town,790,葵青,粉嶺／上水新市鎮
+Tsuen Wan,Fanling/ Sheung Shui New Town,862,荃灣,粉嶺／上水新市鎮
+Tuen Mun,Fanling/ Sheung Shui New Town,2369,屯門,粉嶺／上水新市鎮
+Yuen Long,Fanling/ Sheung Shui New Town,4416,元朗,粉嶺／上水新市鎮
+North,Fanling/ Sheung Shui New Town,26187,北區,粉嶺／上水新市鎮
+Tai Po,Fanling/ Sheung Shui New Town,4089,大埔,粉嶺／上水新市鎮
+Sha Tin,Fanling/ Sheung Shui New Town,3759,沙田,粉嶺／上水新市鎮
+Sai Kung,Fanling/ Sheung Shui New Town,922,西貢,粉嶺／上水新市鎮
+Islands,Fanling/ Sheung Shui New Town,193,離島,粉嶺／上水新市鎮
+Central and Western,Tai Po New Town,706,中西區,大埔新市鎮
+Wan Chai,Tai Po New Town,567,灣仔,大埔新市鎮
+Eastern,Tai Po New Town,1397,東區,大埔新市鎮
+Southern,Tai Po New Town,325,南區,大埔新市鎮
+Yau Tsim Mong,Tai Po New Town,1269,油尖旺,大埔新市鎮
+Sham Shui Po,Tai Po New Town,1863,深水埗,大埔新市鎮
+Kowloon City,Tai Po New Town,2477,九龍城,大埔新市鎮
+Wong Tai Sin,Tai Po New Town,2121,黃大仙,大埔新市鎮
+Kwun Tong,Tai Po New Town,2588,觀塘,大埔新市鎮
+Kwai Tsing,Tai Po New Town,2048,葵青,大埔新市鎮
+Tsuen Wan,Tai Po New Town,1938,荃灣,大埔新市鎮
+Tuen Mun,Tai Po New Town,1838,屯門,大埔新市鎮
+Yuen Long,Tai Po New Town,3904,元朗,大埔新市鎮
+North,Tai Po New Town,9499,北區,大埔新市鎮
+Tai Po,Tai Po New Town,28160,大埔,大埔新市鎮
+Sha Tin,Tai Po New Town,8689,沙田,大埔新市鎮
+Sai Kung,Tai Po New Town,2113,西貢,大埔新市鎮
+Islands,Tai Po New Town,293,離島,大埔新市鎮
+Central and Western,Sha Tin New Town,1053,中西區,沙田新市鎮
+Wan Chai,Sha Tin New Town,889,灣仔,沙田新市鎮
+Eastern,Sha Tin New Town,3613,東區,沙田新市鎮
+Southern,Sha Tin New Town,1440,南區,沙田新市鎮
+Yau Tsim Mong,Sha Tin New Town,3449,油尖旺,沙田新市鎮
+Sham Shui Po,Sha Tin New Town,4213,深水埗,沙田新市鎮
+Kowloon City,Sha Tin New Town,5126,九龍城,沙田新市鎮
+Wong Tai Sin,Sha Tin New Town,6277,黃大仙,沙田新市鎮
+Kwun Tong,Sha Tin New Town,6890,觀塘,沙田新市鎮
+Kwai Tsing,Sha Tin New Town,5882,葵青,沙田新市鎮
+Tsuen Wan,Sha Tin New Town,4456,荃灣,沙田新市鎮
+Tuen Mun,Sha Tin New Town,3885,屯門,沙田新市鎮
+Yuen Long,Sha Tin New Town,5794,元朗,沙田新市鎮
+North,Sha Tin New Town,10913,北區,沙田新市鎮
+Tai Po,Sha Tin New Town,10906,大埔,沙田新市鎮
+Sha Tin,Sha Tin New Town,51378,沙田,沙田新市鎮
+Sai Kung,Sha Tin New Town,4957,西貢,沙田新市鎮
+Islands,Sha Tin New Town,697,離島,沙田新市鎮
+Central and Western,Ma On Shan New Town,32,中西區,馬鞍山新市鎮
+Wan Chai,Ma On Shan New Town,67,灣仔,馬鞍山新市鎮
+Eastern,Ma On Shan New Town,243,東區,馬鞍山新市鎮
+Southern,Ma On Shan New Town,78,南區,馬鞍山新市鎮
+Yau Tsim Mong,Ma On Shan New Town,177,油尖旺,馬鞍山新市鎮
+Sham Shui Po,Ma On Shan New Town,246,深水埗,馬鞍山新市鎮
+Kowloon City,Ma On Shan New Town,255,九龍城,馬鞍山新市鎮
+Wong Tai Sin,Ma On Shan New Town,580,黃大仙,馬鞍山新市鎮
+Kwun Tong,Ma On Shan New Town,453,觀塘,馬鞍山新市鎮
+Kwai Tsing,Ma On Shan New Town,483,葵青,馬鞍山新市鎮
+Tsuen Wan,Ma On Shan New Town,205,荃灣,馬鞍山新市鎮
+Tuen Mun,Ma On Shan New Town,266,屯門,馬鞍山新市鎮
+Yuen Long,Ma On Shan New Town,223,元朗,馬鞍山新市鎮
+North,Ma On Shan New Town,745,北區,馬鞍山新市鎮
+Tai Po,Ma On Shan New Town,1012,大埔,馬鞍山新市鎮
+Sha Tin,Ma On Shan New Town,10383,沙田,馬鞍山新市鎮
+Sai Kung,Ma On Shan New Town,473,西貢,馬鞍山新市鎮
+Islands,Ma On Shan New Town,39,離島,馬鞍山新市鎮
+Central and Western,Kwai Chung New Town,1961,中西區,葵涌新市鎮
+Wan Chai,Kwai Chung New Town,1210,灣仔,葵涌新市鎮
+Eastern,Kwai Chung New Town,3774,東區,葵涌新市鎮
+Southern,Kwai Chung New Town,1590,南區,葵涌新市鎮
+Yau Tsim Mong,Kwai Chung New Town,4797,油尖旺,葵涌新市鎮
+Sham Shui Po,Kwai Chung New Town,9227,深水埗,葵涌新市鎮
+Kowloon City,Kwai Chung New Town,5056,九龍城,葵涌新市鎮
+Wong Tai Sin,Kwai Chung New Town,6309,黃大仙,葵涌新市鎮
+Kwun Tong,Kwai Chung New Town,6871,觀塘,葵涌新市鎮
+Kwai Tsing,Kwai Chung New Town,38999,葵青,葵涌新市鎮
+Tsuen Wan,Kwai Chung New Town,14240,荃灣,葵涌新市鎮
+Tuen Mun,Kwai Chung New Town,12235,屯門,葵涌新市鎮
+Yuen Long,Kwai Chung New Town,11477,元朗,葵涌新市鎮
+North,Kwai Chung New Town,3133,北區,葵涌新市鎮
+Tai Po,Kwai Chung New Town,3962,大埔,葵涌新市鎮
+Sha Tin,Kwai Chung New Town,10923,沙田,葵涌新市鎮
+Sai Kung,Kwai Chung New Town,4879,西貢,葵涌新市鎮
+Islands,Kwai Chung New Town,2076,離島,葵涌新市鎮
+Central and Western,Tsing Yi New Town,358,中西區,青衣新市鎮
+Wan Chai,Tsing Yi New Town,279,灣仔,青衣新市鎮
+Eastern,Tsing Yi New Town,1057,東區,青衣新市鎮
+Southern,Tsing Yi New Town,379,南區,青衣新市鎮
+Yau Tsim Mong,Tsing Yi New Town,771,油尖旺,青衣新市鎮
+Sham Shui Po,Tsing Yi New Town,1423,深水埗,青衣新市鎮
+Kowloon City,Tsing Yi New Town,1062,九龍城,青衣新市鎮
+Wong Tai Sin,Tsing Yi New Town,1456,黃大仙,青衣新市鎮
+Kwun Tong,Tsing Yi New Town,1494,觀塘,青衣新市鎮
+Kwai Tsing,Tsing Yi New Town,12173,葵青,青衣新市鎮
+Tsuen Wan,Tsing Yi New Town,2081,荃灣,青衣新市鎮
+Tuen Mun,Tsing Yi New Town,2110,屯門,青衣新市鎮
+Yuen Long,Tsing Yi New Town,2397,元朗,青衣新市鎮
+North,Tsing Yi New Town,992,北區,青衣新市鎮
+Tai Po,Tsing Yi New Town,651,大埔,青衣新市鎮
+Sha Tin,Tsing Yi New Town,1828,沙田,青衣新市鎮
+Sai Kung,Tsing Yi New Town,920,西貢,青衣新市鎮
+Islands,Tsing Yi New Town,679,離島,青衣新市鎮
+Central and Western,North Lantau New Town,205,中西區,北大嶼山新市鎮
+Wan Chai,North Lantau New Town,81,灣仔,北大嶼山新市鎮
+Eastern,North Lantau New Town,257,東區,北大嶼山新市鎮
+Southern,North Lantau New Town,67,南區,北大嶼山新市鎮
+Yau Tsim Mong,North Lantau New Town,460,油尖旺,北大嶼山新市鎮
+Sham Shui Po,North Lantau New Town,839,深水埗,北大嶼山新市鎮
+Kowloon City,North Lantau New Town,358,九龍城,北大嶼山新市鎮
+Wong Tai Sin,North Lantau New Town,357,黃大仙,北大嶼山新市鎮
+Kwun Tong,North Lantau New Town,623,觀塘,北大嶼山新市鎮
+Kwai Tsing,North Lantau New Town,1838,葵青,北大嶼山新市鎮
+Tsuen Wan,North Lantau New Town,747,荃灣,北大嶼山新市鎮
+Tuen Mun,North Lantau New Town,1036,屯門,北大嶼山新市鎮
+Yuen Long,North Lantau New Town,815,元朗,北大嶼山新市鎮
+North,North Lantau New Town,326,北區,北大嶼山新市鎮
+Tai Po,North Lantau New Town,284,大埔,北大嶼山新市鎮
+Sha Tin,North Lantau New Town,637,沙田,北大嶼山新市鎮
+Sai Kung,North Lantau New Town,122,西貢,北大嶼山新市鎮
+Islands,North Lantau New Town,3898,離島,北大嶼山新市鎮
+Central and Western,Other areas in the New Territories,2196,中西區,新界其他地區
+Wan Chai,Other areas in the New Territories,1314,灣仔,新界其他地區
+Eastern,Other areas in the New Territories,4509,東區,新界其他地區
+Southern,Other areas in the New Territories,2529,南區,新界其他地區
+Yau Tsim Mong,Other areas in the New Territories,4479,油尖旺,新界其他地區
+Sham Shui Po,Other areas in the New Territories,5342,深水埗,新界其他地區
+Kowloon City,Other areas in the New Territories,5029,九龍城,新界其他地區
+Wong Tai Sin,Other areas in the New Territories,6621,黃大仙,新界其他地區
+Kwun Tong,Other areas in the New Territories,8920,觀塘,新界其他地區
+Kwai Tsing,Other areas in the New Territories,12333,葵青,新界其他地區
+Tsuen Wan,Other areas in the New Territories,6141,荃灣,新界其他地區
+Tuen Mun,Other areas in the New Territories,14654,屯門,新界其他地區
+Yuen Long,Other areas in the New Territories,26201,元朗,新界其他地區
+North,Other areas in the New Territories,10291,北區,新界其他地區
+Tai Po,Other areas in the New Territories,5379,大埔,新界其他地區
+Sha Tin,Other areas in the New Territories,11218,沙田,新界其他地區
+Sai Kung,Other areas in the New Territories,11296,西貢,新界其他地區
+Islands,Other areas in the New Territories,20865,離島,新界其他地區
+Central and Western,No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,38493,中西區,在香港沒有固定工作地點／水上／於家中工作／香港以外地方
+Wan Chai,No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,32278,灣仔,在香港沒有固定工作地點／水上／於家中工作／香港以外地方
+Eastern,No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,70559,東區,在香港沒有固定工作地點／水上／於家中工作／香港以外地方
+Southern,No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,38424,南區,在香港沒有固定工作地點／水上／於家中工作／香港以外地方
+Yau Tsim Mong,No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,47132,油尖旺,在香港沒有固定工作地點／水上／於家中工作／香港以外地方
+Sham Shui Po,No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,47312,深水埗,在香港沒有固定工作地點／水上／於家中工作／香港以外地方
+Kowloon City,No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,55241,九龍城,在香港沒有固定工作地點／水上／於家中工作／香港以外地方
+Wong Tai Sin,No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,42710,黃大仙,在香港沒有固定工作地點／水上／於家中工作／香港以外地方
+Kwun Tong,No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,65921,觀塘,在香港沒有固定工作地點／水上／於家中工作／香港以外地方
+Kwai Tsing,No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,56677,葵青,在香港沒有固定工作地點／水上／於家中工作／香港以外地方
+Tsuen Wan,No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,39874,荃灣,在香港沒有固定工作地點／水上／於家中工作／香港以外地方
+Tuen Mun,No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,53895,屯門,在香港沒有固定工作地點／水上／於家中工作／香港以外地方
+Yuen Long,No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,75169,元朗,在香港沒有固定工作地點／水上／於家中工作／香港以外地方
+North,No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,36320,北區,在香港沒有固定工作地點／水上／於家中工作／香港以外地方
+Tai Po,No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,39149,大埔,在香港沒有固定工作地點／水上／於家中工作／香港以外地方
+Sha Tin,No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,79289,沙田,在香港沒有固定工作地點／水上／於家中工作／香港以外地方
+Sai Kung,No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,58090,西貢,在香港沒有固定工作地點／水上／於家中工作／香港以外地方
+Islands,No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong,21371,離島,在香港沒有固定工作地點／水上／於家中工作／香港以外地方

@@ -1,12 +1,38 @@
 ---
-title: "work_OD"
-author: "Kenneth Wong"
-date: "12/28/2020"
-output: html_document
+title: "Work OD"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output:
+  md_document:
+    variant: gfm
+    preserve_yaml: true
+  html_document:
+    code_folding: hide
+    css: style.css
+    number_sections: no
+    theme: flatly
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    df_print: kable
+    number_sections: no
+    toc: yes
+  word_document:
+    toc: yes
+always_allow_html: yes
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE,
+                      dpi = 600, fig.width = 9.45, fig.height = 5.91)
+
+# Global thousand separator
+# https://stackoverflow.com/questions/18965637/set-global-thousand-separator-on-knitr
+knitr::knit_hooks$set(inline = function(x) {
+  prettyNum(x, big.mark = ",")
+})
+
+options(scipen = 999)
+
 ```
 
 ```{r}
@@ -14,22 +40,45 @@ library(tidyverse)
 library(networkD3)
 library(ggalluvial)
 library(plotly)
+
+# https://stackoverflow.com/questions/55702377/ggplot2-doesnt-show-chinese-character-properly-in-rstudio-server-in-docker
+library(showtext)
 ```
 
 
 ```{r}
-work_OD = read_csv("data/data-edited/work_OD_clean.csv") %>%
-  rename(
-    "place_of_residence" = "Place of residence",
-    "place_of_work" = "Place of Work",
-    "N_workers" = "Number of Persons"
-  )
+# https://stackoverflow.com/questions/46996501/readrread-csv-issue-chinese-character-becomes-messy-codes
+# work_OD = read_csv("data/data-edited/work_OD_clean.csv",
+#                   locale = locale(encoding = 'ISO-8859-1'))
+
+work_OD = read_csv("data/data-edited/work_OD_clean.csv")
+
+work_OD_chi = read_csv("data/data-edited/work_OD_clean_chi.csv")
+
+place_name = read_csv("data/data-edited/place_name.csv")
+```
+
+
+```{r, eval=FALSE}
+# TODO: check encoding issue
+work_OD_2 = read.csv2(file("data/data-edited/work_OD_clean.csv", encoding = "UTF-8"))
+
+stri_encode(work_OD, from="", to = "UTF-8")
+
+
+
+for (col in colnames(work_OD)) {
+  print(col)
+  work_OD[[col]] = stri_encode(work_OD[[col]], from="", to = "UTF-8")
+}
+
+Encoding(work_OD$place_of_residence) <- "UTF-8"
 ```
 
 # Add categorial variables
 
 ```{r}
-work_OD_order = work_OD %>%
+work_OD_order = work_OD_chi %>%
   mutate(
     residence_area = case_when(
       place_of_residence %in% c("Central and Western", "Wan Chai", "Eastern", "Southern") ~ "HKI",
@@ -93,13 +142,17 @@ work_OD_plot_reorder_KT = work_OD_plot_reorder %>%
 
 ## ggalluvial
 
+Since we are interested in the actual commuting flow from land to land, here we drop the no fixed place categories.
+
+
+
 ```{r}
 OD_work_alluvial = ggplot(work_OD_plot_reorder_rmspecial, aes(y = N_workers, axis1 = place_of_residence, axis2 = place_of_work)) +
   geom_alluvium(aes(fill = residence_area), width = .2, alpha = .4) +
   geom_stratum(width = .2, fill = "#EEEEEE", color = "#FFFFFF") +
   # http://corybrunson.github.io/ggalluvial/reference/stat_stratum.html
   # https://stackoverflow.com/questions/29465941/format-number-in-r-with-both-comma-thousands-separator-and-specified-decimals
-  geom_text(stat = "stratum", aes(label = paste0(after_stat(stratum), " -\n", after_stat(format(count, big.mark=",")))), size = 2) +
+  geom_text(stat = "stratum", aes(label = paste0(after_stat(stratum), "\n", after_stat(format(count, big.mark=",")))), size = 2) +
   scale_x_discrete(limits = c("Place of \nResidence", "Place of \nWork"), expand = c(.05, .05), position = "top") +
   scale_fill_brewer(type = "qual", palette = "Set1") +
   theme_void() +
@@ -116,10 +169,43 @@ OD_work_alluvial = ggplot(work_OD_plot_reorder_rmspecial, aes(y = N_workers, axi
 
 OD_work_alluvial
 ```
+
 ```{r}
 ggsave("OD_work_alluvial.svg", width = 150, height = 450, units = "mm")
 ```
 
+
+```{r}
+showtext_auto()
+
+OD_work_alluvial_chi = ggplot(work_OD_plot_reorder_rmspecial, aes(y = N_workers, axis1 = place_of_residence_chi, axis2 = place_of_work_chi)) +
+  geom_alluvium(aes(fill = residence_area), width = .2, alpha = .4) +
+  geom_stratum(width = .2, fill = "#EEEEEE", color = "#FFFFFF") +
+  # http://corybrunson.github.io/ggalluvial/reference/stat_stratum.html
+  # https://stackoverflow.com/questions/29465941/format-number-in-r-with-both-comma-thousands-separator-and-specified-decimals
+  geom_text(stat = "stratum", aes(label = paste0(after_stat(stratum), "\n", after_stat(format(count, big.mark=",")))), size = 2) +
+  scale_x_discrete(limits = c("居住地區", "工作地區"), expand = c(.05, .05), position = "top") +
+  scale_fill_brewer(type = "qual", palette = "Set1") +
+  theme_void() +
+  theme(
+    axis.text.x = element_text(size = 12),
+    legend.position = "None",
+    aspect.ratio = 3/1
+  ) +
+  labs(
+    title = "我的訴求就是上班",
+    subtitle = "香港",
+    caption = "此圖表並不包括沒有固定工作地點及於水上／家中／香港以外地方工作的勞動人口"
+  )
+
+
+OD_work_alluvial_chi
+
+showtext_auto(FALSE)
+```
+```{r}
+ggsave("OD_work_alluvial_chi.svg", width = 150, height = 450, units = "mm")
+```
 
 ## Sankey Network
 
@@ -143,7 +229,7 @@ work_OD_plot_reorder_KT_char = work_OD_plot_reorder_KT %>%
 ```
 
 
-```{r}
+```{r, eval=FALSE}
 
 # Make the Network
 sankeyNetwork(Links = work_OD_plot_reorder_KT_char, Nodes = nodes_OD_KT,
@@ -152,40 +238,6 @@ sankeyNetwork(Links = work_OD_plot_reorder_KT_char, Nodes = nodes_OD_KT,
               sinksRight = FALSE)
 ```
 
-
-```{r}
-# Load dataset from github
-data <- read.table("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/13_AdjacencyDirectedWeighted.csv", header=TRUE)
-
-
-# I need a long format
-data_long <- data %>%
-  rownames_to_column %>%
-  gather(key = 'key', value = 'value', -rowname) %>%
-  filter(value > 0)
-colnames(data_long) <- c("source", "target", "value")
-data_long$target <- paste(data_long$target, " ", sep="")
-
-# From these flows we need to create a node data frame: it lists every entities involved in the flow
-nodes <- data.frame(name=c(as.character(data_long$source), as.character(data_long$target)) %>% unique())
- 
-# With networkD3, connection must be provided using id, not using real name like in the links dataframe.. So we need to reformat it.
-data_long$IDsource=match(data_long$source, nodes$name)-1 
-data_long$IDtarget=match(data_long$target, nodes$name)-1
-
-# prepare colour scale
-ColourScal ='d3.scaleOrdinal() .range(["#FDE725FF","#B4DE2CFF","#6DCD59FF","#35B779FF","#1F9E89FF","#26828EFF","#31688EFF","#3E4A89FF","#482878FF","#440154FF"])'
-
-# Make the Network
-sankeyNetwork(Links = data_long, Nodes = nodes,
-                     Source = "IDsource", Target = "IDtarget",
-                     Value = "value", NodeID = "name", 
-                     sinksRight=FALSE, colourScale=ColourScal, nodeWidth=40, fontSize=13, nodePadding=20)
-```
-
-```{r}
-work_OD_plot_reorder_KT_char
-```
 
 ```{r}
 nodes_OD_KT[["node_name"]]
@@ -247,12 +299,13 @@ nodes_OD_wposition = nodes_OD %>%
 ```{r}
 fig <- plot_ly(
     type = "sankey",
+    arrangement = "snap",
     orientation = "h",
 
     node = list(
       label = nodes_OD_wposition[["node_name"]],
-      x = nodes_OD_wposition[["node_x"]],
-      y = nodes_OD_wposition[["node_y"]],
+      # x = nodes_OD_wposition[["node_x"]],
+      # y = nodes_OD_wposition[["node_y"]],
       color = "#666666",
       pad = 15,
       thickness = 20,
@@ -267,7 +320,6 @@ fig <- plot_ly(
       target = work_OD_plot_reorder_plotly[["destination_ID"]],
       value = work_OD_plot_reorder_plotly[["N_workers"]],
       color = work_OD_plot_reorder_plotly[["link_colour"]]
-      # color = "#00FF00"
 
     )
   )
@@ -285,6 +337,7 @@ fig
 ```{r}
 fig_rmspecial <- plot_ly(
     type = "sankey",
+    arrangement = "snap",
     orientation = "h",
 
     node = list(
