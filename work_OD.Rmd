@@ -95,21 +95,29 @@ work_OD_plot_reorder_KT = work_OD_plot_reorder %>%
 
 ```{r}
 OD_work_alluvial = ggplot(work_OD_plot_reorder_rmspecial, aes(y = N_workers, axis1 = place_of_residence, axis2 = place_of_work)) +
-  geom_alluvium(aes(fill = residence_area), width = 1/12, alpha = .4) +
-  geom_stratum(width = 1/12, fill = "#EEEEEE", color = "grey") +
-  geom_text(stat = "stratum", aes(label = after_stat(stratum)), size = 2) +
+  geom_alluvium(aes(fill = residence_area), width = .2, alpha = .4) +
+  geom_stratum(width = .2, fill = "#EEEEEE", color = "#FFFFFF") +
+  # http://corybrunson.github.io/ggalluvial/reference/stat_stratum.html
+  # https://stackoverflow.com/questions/29465941/format-number-in-r-with-both-comma-thousands-separator-and-specified-decimals
+  geom_text(stat = "stratum", aes(label = paste0(after_stat(stratum), " -\n", after_stat(format(count, big.mark=",")))), size = 2) +
+  scale_x_discrete(limits = c("Place of \nResidence", "Place of \nWork"), expand = c(.05, .05), position = "top") +
   scale_fill_brewer(type = "qual", palette = "Set1") +
   theme_void() +
   theme(
-    legend.position = "None"
+    axis.text.x = element_text(size = 12),
+    legend.position = "None",
+    aspect.ratio = 3/1
   ) +
   labs(
-    title = "",
+    title = "Flow of commuters",
     subtitle = "Place of residence and work of commuters in Hong Kong",
-    caption = "Note: workers with no fixed places of work in Hong Kong or work in Marine/at home/places outside Hong Kong are excluded."
+    caption = "Note: workers with no fixed places of work or \nwork in Marine/at home/in places outside Hong Kong are excluded."
   )
 
 OD_work_alluvial
+```
+```{r}
+ggsave("OD_work_alluvial.svg", width = 150, height = 450, units = "mm")
 ```
 
 
@@ -275,7 +283,7 @@ fig
 ```
 
 ```{r}
-fig_fromHKI <- plot_ly(
+fig_rmspecial <- plot_ly(
     type = "sankey",
     orientation = "h",
 
@@ -300,16 +308,24 @@ fig_fromHKI <- plot_ly(
     )
   )
 
-fig_fromHKI <- fig_fromHKI %>% layout(
+fig_rmspecial <- fig_rmspecial %>% layout(
     title = "Basic Sankey Diagram",
     font = list(
       size = 10
     )
 )
 
-fig_fromHKI
+fig_rmspecial
 ```
 
+```{r}
+nodes_OD_fromHKI = nodes_OD_wposition %>%
+  filter(node_ID <=3 | (node_ID >= 18)) %>%
+  mutate(node_ID = ifelse(node_ID <=3 , node_ID, node_ID - 14))
+
+work_OD_plot_reorder_plotly_fromHKI_increID = work_OD_plot_reorder_plotly_fromHKI %>%
+  mutate(destination_ID = destination_ID - 14)
+```
 
 ```{r}
 
@@ -319,9 +335,9 @@ fig_fromHKI <- plot_ly(
     orientation = "h",
 
     node = list(
-      label = nodes_OD_wposition[["node_name"]],
-      x = nodes_OD_wposition[["node_x"]],
-      y = nodes_OD_wposition[["node_y_manual"]],
+      label = nodes_OD_fromHKI[["node_name"]],
+      # x = nodes_OD_fromHKI[["node_x"]],
+      # y = nodes_OD_fromHKI[["node_y"]],
       color = "#666666",
       pad = 15,
       thickness = 20,
@@ -332,10 +348,10 @@ fig_fromHKI <- plot_ly(
     ),
 
     link = list(
-      source = work_OD_plot_reorder_plotly_fromHKI[["origin_ID"]],
-      target = work_OD_plot_reorder_plotly_fromHKI[["destination_ID"]],
-      value = work_OD_plot_reorder_plotly_fromHKI[["N_workers"]],
-      color = work_OD_plot_reorder_plotly_fromHKI[["link_colour"]]
+      source = work_OD_plot_reorder_plotly_fromHKI_increID[["origin_ID"]],
+      target = work_OD_plot_reorder_plotly_fromHKI_increID[["destination_ID"]],
+      value = work_OD_plot_reorder_plotly_fromHKI_increID[["N_workers"]],
+      color = work_OD_plot_reorder_plotly_fromHKI_increID[["link_colour"]]
       # color = "#00FF00"
 
     )
@@ -356,8 +372,7 @@ nodes_OD_fromtoHKI = nodes_OD_wposition %>%
   filter(node_ID <=3 | (node_ID >= 18 & node_ID <= 21))
 
 work_OD_plot_reorder_plotly_fromtoHKI = work_OD_plot_reorder_plotly %>%
-  dplyr::filter(residence_area == "HKI" & (destination_ID >= 18 & destination_ID <= 21) ) %>%
-  mutate(destination_ID = ifelse(destination_ID > 3, destination_ID - 14, destination_ID))
+  dplyr::filter(residence_area == "HKI" & (destination_ID >= 18 & destination_ID <= 21) )
 ```
 
 
@@ -370,7 +385,7 @@ fig_fromtoHKI <- plot_ly(
 
     node = list(
       label = nodes_OD_wposition[["node_name"]],
-      x = nodes_OD_wposition[["node_x_nudge"]],
+      x = nodes_OD_wposition[["node_x"]],
       y = nodes_OD_wposition[["node_y"]],
       color = "#666666",
       pad = 15,
@@ -478,7 +493,7 @@ fig_toKT_layout
 
 fig_test <- plot_ly(
     type = "sankey",
-    # arrangement = "snap",
+    arrangement = "snap",
     orientation = "h",
 
     node = list(
