@@ -1,0 +1,46 @@
+h4 {
+  text-align: center;
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+footer {
+  font-size: 0.8em;
+  line-height: 1.3em;
+  padding-top: 0.5em;
+  margin-top: 0.5em;
+}
+
+
+/* Rendered result text */
+
+.shiny-text-output, .shiny-bound-output {
+  text-align: center;
+}
+
+/* Shiny widgets */
+/* https://stackoverflow.com/questions/31538767/how-to-change-shiny, -widget-colour */
+
+.irs-bar {
+  background: #2c3e50;
+  border: 1px solid #2c3e50;
+}
+
+.irs-bar-edge {
+  background: #2c3e50;
+  border: 1px solid #2c3e50;
+}
+
+.irs-single{
+  background: #2c3e50;
+}
+
+
+/* Slider position */
+.form-group, .shiny-input-container {
+  margin: auto;
+}

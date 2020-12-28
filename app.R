@@ -8,12 +8,41 @@
 #
 
 library(shiny)
+library(shinythemes)
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
 
+    # Theme options --------
+    theme = shinytheme("flatly"),
+    includeCSS("style.css"),
+    
+    
     # Application title
-    titlePanel("Old Faithful Geyser Data"),
+    titlePanel("Flow of commuters"),
+    
+    column(3, 
+           checkboxGroupInput("checkGroup", 
+                              h3("Place of residence"), 
+                              choices = list("Central and Western" = 0, 
+                                             "Wan Chai" = 1, 
+                                             "Eastern" = 2,
+                                             "Southern" = 3,
+                                             "Yau Tsim Mong" = 4,
+                                             "Sham Shui Po" = 5,
+                                             "Kowloon City" = 6,
+                                             "Wong Tai Sin" = 7,
+                                             "Kwun Tong" = 8,
+                                             "Kwai Tsing" = 9,
+                                             "Tsuen Wan" = 10,
+                                             "Tuen Mun" = 11,
+                                             "Yuen Long" = 12,
+                                             "North" = 13,
+                                             "Tai Po" = 14,
+                                             "Sha Tin" = 15,
+                                             "Sai Kung" = 16,
+                                             "Islands" = 17),
+                              selected = 1)),
 
     # Sidebar with a slider input for number of bins 
     sidebarLayout(
@@ -29,6 +58,16 @@ ui <- fluidPage(
         mainPanel(
            plotOutput("distPlot")
         )
+    ),
+    
+    hr(),
+    
+    
+    
+    # Footer ---------------
+    div(
+        class = "footer",
+        includeHTML("template/footer.html")
     )
 )
 
