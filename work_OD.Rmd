@@ -180,6 +180,41 @@ OD_work_alluvial
 ggsave("OD_work_alluvial.svg", width = 150, height = 450, units = "mm")
 ```
 
+```{r}
+work_OD_plot_reorder_rmspecial_KChighlight = work_OD_plot_reorder_rmspecial %>%
+  mutate(alluvial_fill = ifelse(place_of_residence == "Kowloon City", "#4DAF4A", "#D3D3D3"))
+
+
+```
+
+```{r}
+OD_work_alluvial_highlightfromKC = ggplot(work_OD_plot_reorder_rmspecial_KChighlight, aes(y = N_workers, axis1 = place_of_residence, axis2 = place_of_work)) +
+  geom_alluvium(aes(fill = alluvial_fill), width = .2, alpha = .4) +
+  geom_stratum(width = .2, fill = "#EEEEEE", color = "#FFFFFF") +
+  # http://corybrunson.github.io/ggalluvial/reference/stat_stratum.html
+  # https://stackoverflow.com/questions/29465941/format-number-in-r-with-both-comma-thousands-separator-and-specified-decimals
+  geom_text(stat = "stratum", aes(label = paste0(after_stat(stratum), "\n", after_stat(format(count, big.mark=",")))), size = 2) +
+  scale_x_discrete(limits = c("Place of \nResidence", "Place of \nWork"), expand = c(.05, .05), position = "top") +
+  scale_fill_identity() +
+  theme_void() +
+  theme(
+    axis.text.x = element_text(size = 12),
+    legend.position = "None",
+    aspect.ratio = 3/1
+  ) +
+  labs(
+    title = "Flow of commuters",
+    subtitle = "Place of residence and work of commuters in Hong Kong",
+    caption = "Note: workers with no fixed places of work or \nwork in Marine/at home/in places outside Hong Kong are excluded."
+  )
+
+OD_work_alluvial_highlightfromKC
+```
+
+```{r}
+ggsave("OD_work_alluvial_highlightfromKC.svg", width = 150, height = 450, units = "mm")
+```
+
 
 ```{r}
 showtext_auto()
