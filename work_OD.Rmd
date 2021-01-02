@@ -86,8 +86,22 @@ work_OD_order = work_OD_chi %>%
       place_of_residence %in% c("Kwai Tsing", "Tsuen Wan", "Tuen Mun", "Yuen Long") ~ "NTW",
       place_of_residence %in% c("North", "Tai Po", "Sha Tin", "Sai Kung") ~ "NTE",
       place_of_residence %in% c("Islands") ~ "I",
+    ),
+    work_area = case_when(
+      place_of_work %in% c("Central and Western", "Wan Chai", "Eastern", "Southern") ~ "HKI",
+      place_of_work %in% c("Yau Tsim Mong", "Sham Shui Po", "Kowloon City", "Wong Tai Sin", "Kwun Tong") ~ "KL",
+      place_of_work %in% c("Kwai Chung New Town", "Tsuen Wan New Town", "Tsing Yi New Town", "Tuen Mun New Town", "Tin Shui Wai New Town", "Yuen Long New Town") ~ "NTW",
+      place_of_work %in% c("Fanling/ Sheung Shui New Town", "Tai Po New Town", "Sha Tin New Town", "Ma On Shan New Town", "Tseung Kwan O New Town") ~ "NTE",
+      place_of_work %in% c("North Lantau New Town") ~ "I",
+      place_of_work %in% c("Other areas in the New Territories") ~ "NT_Others",
+      place_of_work %in% c("No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong") ~ "Others",
     )
+  ) %>%
+  mutate(
+    travel_dir = paste0(residence_area,  " to ", work_area),
+    same_work_area = ifelse(residence_area == work_area, TRUE, FALSE)
   )
+
 ```
 
 
@@ -247,6 +261,143 @@ showtext_auto(FALSE)
 ```{r}
 ggsave("OD_work_alluvial_chi.svg", width = 150, height = 450, units = "mm")
 ```
+
+## ggalluvial, colour with whether cross-district or not
+
+```{r}
+cross_district_summary = work_OD_plot_reorder %>%
+  group_by(residence_area, work_area) %>%
+  summarise(
+    total_N = sum(N_workers)
+  )
+```
+
+```{r}
+cross_travel_type = work_OD_plot_reorder %>%
+  mutate(
+    journey_type = case_when(
+      travel_dir %in% c("HKI to HKI", "KL to KL", "NTW to NTW", "NTE to NTE", "I to I") ~ "Same Area",
+      travel_dir %in% c("HKI to KL", "KL to HKI") ~ "HKI/KL",
+      travel_dir %in% c("HKI to NTW", "NTW to HKI") ~"HKI/NTW",
+      travel_dir %in% c("HKI to NTE", "NTE to HKI") ~ "HKI/NTE",
+      travel_dir %in% c("HKI to I", "I to HKI") ~ "HKI/I",
+      travel_dir %in% c("KL to NTW", "NTW to KL") ~ "KL/NTW",
+      travel_dir %in% c("KL to NTE", "NTE to KL") ~ "KL/NTE",
+      travel_dir %in% c("KL to I", "I to KL") ~ "KL/I",
+      travel_dir %in% c("NTW to NTE", "NTE to NTW") ~ "NTW/NTE",
+      travel_dir %in% c("NTW to I", "I to NTW") ~ "NTW/I",
+      travel_dir %in% c("NTE to I", "I to NTE") ~ "NTE/I",
+      travel_dir %in% c("HKI to NT_Others", "KL to NT_Others", "NTW to NT_Others", "NTE to NT_Others", "I to NT_Others") ~ "to_NT_Others",
+      travel_dir %in% c("HKI to Others", "KL to Others", "NTW to Others", "NTE to Others", "I to Others") ~ "to_Others"
+    )
+  ) %>%
+  # Combine NTW and I
+  mutate(
+    journey_type_sim = case_when(
+      travel_dir %in% c("HKI to HKI", "KL to KL", "NTW to NTW", "NTE to NTE", "I to I", "NTW to I", "I to NTW") ~ "Same Area",
+      travel_dir %in% c("HKI to KL", "KL to HKI") ~ "HKI/KL",
+      travel_dir %in% c("HKI to NTW", "NTW to HKI", "HKI to I", "I to HKI") ~ "HKI/NTW",
+      travel_dir %in% c("HKI to NTE", "NTE to HKI") ~ "HKI/NTE",
+      travel_dir %in% c("KL to NTW", "NTW to KL", "KL to I", "I to KL") ~ "KL/NTW",
+      travel_dir %in% c("KL to NTE", "NTE to KL") ~ "KL/NTE",
+      travel_dir %in% c("NTW to NTE", "NTE to NTW", "NTE to I", "I to NTE") ~ "NTW/NTE",
+      travel_dir %in% c("HKI to NT_Others", "KL to NT_Others", "NTW to NT_Others", "NTE to NT_Others", "I to NT_Others") ~ "to_NT_Others",
+      travel_dir %in% c("HKI to Others", "KL to Others", "NTW to Others", "NTE to Others", "I to Others") ~ "to_Others"
+    )
+  ) %>%
+  # HKI, KL, NT, Others
+  mutate(
+    jounrney_type_mostsim = case_when(
+      travel_dir %in% c("HKI to HKI", "KL to KL", "NTW to NTW", "NTE to NTE", "I to I", "NTW to I", "I to NTW", "NTW to NTE", "NTE to NTW", "NTE to I", "I to NTE", "NTW to NT_Others", "NTE to NT_Others", "I to NT_Others") ~ "Same Area",
+      travel_dir %in% c("HKI to KL", "KL to HKI") ~ "HKI/KL",
+      travel_dir %in% c("HKI to NTW", "NTW to HKI", "HKI to I", "I to HKI", "HKI to NTE", "NTE to HKI", "HKI to NT_Others") ~ "HKI/NT",
+      travel_dir %in% c("KL to NTW", "NTW to KL", "KL to I", "I to KL", "KL to NTE", "NTE to KL", "KL to NT_Others") ~ "KL/NT",
+      travel_dir %in% c("HKI to Others", "KL to Others", "NTW to Others", "NTE to Others", "I to Others") ~ "to_Others"
+    )
+  )
+
+```
+
+```{r}
+cross_travel_type_rmspecial = cross_travel_type %>%
+  subset(place_of_work != "No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong")
+```
+
+
+```{r}
+cross_travel_type_rmspecial %>%
+  group_by(jounrney_type_mostsim) %>%
+  summarise(
+    total_N = sum(N_workers)
+  )
+```
+
+
+```{r}
+JOURNEY_TYPE_COLOURS_1 = c("Same Area" = "#4daf4a", "HKI/KL" = "#377eb8", "HKI/NT" = "#ff7f00", "KL/NT" = "#984ea3")
+JOURNEY_TYPE_COLOURS_2 = c("Same Area" = "#66c2a5", "HKI/KL" = "#8da0cb", "HKI/NT" = "#e78ac3", "KL/NT" = "#fc8d62")
+
+OD_work_alluvial_travelcolour = ggplot(cross_travel_type_rmspecial, aes(y = N_workers, axis1 = place_of_residence, axis2 = place_of_work)) +
+  geom_alluvium(aes(fill = jounrney_type_mostsim), width = .2, alpha = .4) +
+  geom_stratum(width = .2, fill = "#EEEEEE", color = "#FFFFFF") +
+  # http://corybrunson.github.io/ggalluvial/reference/stat_stratum.html
+  # https://stackoverflow.com/questions/29465941/format-number-in-r-with-both-comma-thousands-separator-and-specified-decimals
+  geom_text(stat = "stratum", aes(label = paste0(after_stat(stratum), "\n", after_stat(format(count, big.mark=",")))), size = 2) +
+  scale_x_discrete(limits = c("Place of \nResidence", "Place of \nWork"), expand = c(.05, .05), position = "top") +
+  scale_fill_manual(values = JOURNEY_TYPE_COLOURS_1, aesthetics = c("colour", "fill")) +
+  # scale_fill_brewer(type = "qual", palette = "Set1") +
+  theme_void() +
+  theme(
+    axis.text.x = element_text(size = 12),
+    legend.position = "None",
+    aspect.ratio = 3/1
+  ) +
+  labs(
+    title = "Flow of commuters",
+    subtitle = "Place of residence and work of commuters in Hong Kong",
+    caption = "Note: workers with no fixed places of work or \nwork in Marine/at home/in places outside Hong Kong are excluded."
+  )
+
+OD_work_alluvial_travelcolour
+```
+
+```{r}
+ggsave("OD_work_alluvial_travelcolour.png", width = 150, height = 450, units = "mm")
+```
+
+## Heatmap
+
+```{r}
+WORKPLACE_ORDER_SIM = c("Central and Western", "Wan Chai", "Eastern", "Southern", "Yau Tsim Mong", "Sham Shui Po", "Kowloon City", "Wong Tai Sin", "Kwun Tong", "Kwai Chung NT", "Tsuen Wan NT", "Tsing Yi NT", "Tuen Mun NT", "Tin Shui Wai NT", "Yuen Long NT", "Fanling/ Sheung Shui NT", "Tai Po NT", "Sha Tin NT", "Ma On Shan NT", "Tseung Kwan O NT", "North Lantau NT", "Others")
+
+cross_travel_type_rmspecial_simlabel = cross_travel_type_rmspecial %>%
+  mutate(
+    place_of_work_sim = ifelse(place_of_work == "Other areas in the New Territories", "Others", str_replace(place_of_work, "New Town", "NT"))
+  )
+  mutate(
+    place_of_work_sim = factor(place_of_work_sim, WORKPLACE_ORDER_SIM)
+  )
+```
+
+
+```{r}
+ggplot(cross_travel_type_rmspecial_simlabel, aes(x = place_of_work_sim, y = fct_rev(place_of_residence), fill = N_workers)) +
+  geom_tile(color = "#EEEEEE", size = 1) +
+  scale_fill_viridis_c(option = "A", direction = -1, trans = "log") +
+  scale_x_discrete(position = "top") +
+  theme_bw() +
+  theme(
+    axis.text.x = element_text(angle = 90, vjust = -1, hjust = 0)
+  ) +
+  labs(
+    y = "Place of residence",
+    x = "Place of work",
+    title = "The OD of workers"
+  )
+  
+```
+
+
 
 ## Sankey Network
 
