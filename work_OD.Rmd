@@ -45,6 +45,10 @@ library(plotly)
 library(showtext)
 
 library(rayshader)
+
+# library(scales)
+library(formattable)
+
 ```
 
 
@@ -425,8 +429,8 @@ cross_travel_type_rmspecial_simlabel = cross_travel_type_rmspecial %>%
 ```{r}
 od_workers_plot = ggplot(cross_travel_type_rmspecial_simlabel, aes(x = place_of_work_sim, y = fct_rev(place_of_residence), fill = N_workers)) +
   geom_tile(color = "#EEEEEE", size = 1) +
-  geom_vline(xintercept = c(4.5, 9.5, 21.5), color = "green") +
-  geom_hline(yintercept = c(9.5, 14.5), color = "blue") +
+  geom_vline(xintercept = c(4.5, 9.5), color = "#ffffff") +
+  geom_hline(yintercept = c(9.5, 14.5), color = "#ffffff") +
   scale_fill_viridis_c(option = "A", direction = -1, trans = "log") +
   scale_x_discrete(position = "top") +
   theme_bw() +
@@ -446,6 +450,36 @@ od_workers_plot
 ```{r}
 ggsave("od_workers_plot.svg", dpi = 300)
 ```
+
+```{r}
+od_workers_plotly = ggplot(cross_travel_type_rmspecial_simlabel, 
+                           aes(x = place_of_work_sim,
+                               y = fct_rev(place_of_residence),
+                               text = paste0("Place of Residence: ", place_of_residence, "\n", "Place of Work: ", place_of_work_sim, "\n", "Number of Workers: ", formattable::comma(N_workers, digits = 0)),
+                               fill = N_workers)
+                           ) +
+  geom_tile(color = "#EEEEEE", size = 1) +
+  geom_vline(xintercept = c(4.5, 9.5), color = "#ffffff") +
+  geom_hline(yintercept = c(9.5, 14.5), color = "#ffffff") +
+  scale_fill_viridis_c(option = "A", direction = -1, trans = "log") +
+  scale_x_discrete(position = "top") +
+  theme_bw() +
+  theme(
+    axis.text.x = element_text(angle = 90, vjust = -1, hjust = 0),
+    aspect.ratio = 18/22
+  ) +
+  labs(
+    y = "Place of residence",
+    x = "Place of work",
+    title = "The OD of workers"
+  )
+
+# workaround for transformed colour scale
+# https://stackoverflow.com/questions/54107531/ggplotly-mouse-values-while-using-a-log-transformed-color-scale
+
+ggplotly(od_workers_plotly, tooltip = c("text"), height = 540, width = 660)
+```
+
 
 
 ## rayshader test
