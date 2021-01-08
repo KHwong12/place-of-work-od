@@ -49,6 +49,8 @@ library(rayshader)
 # library(scales)
 library(formattable)
 
+library(ggrepel)
+
 ```
 
 
@@ -389,6 +391,9 @@ OD_work_alluvial_travelcolour_mant = ggplot(cross_travel_type_rmspecial, aes(y =
   scale_x_discrete(limits = c("Place of \nResidence", "Place of \nWork"), expand = c(.05, .05), position = "top") +
   scale_fill_manual(values = MA_NT_PALETTE, aesthetics = c("colour", "fill")) +
   # scale_fill_brewer(type = "qual", palette = "Set1") +
+  # draw elements outside the plot panel
+  # https://stackoverflow.com/questions/50201928/avoid-ggplot2-to-partially-cut-axis-text
+  coord_cartesian(clip = 'off') +
   theme_void() +
   theme(
     axis.text.x = element_text(size = 12),
@@ -570,14 +575,24 @@ node_y = c(seq(.01, 1, length.out = length(DISTRICT_ORDER)), seq(.01, 1, length.
 # nudged x-axis position for plotly
 node_x_nudge = c(seq(0.01, length.out = length(DISTRICT_ORDER), by = 0.01), rev(seq(1, length.out = length(WORKPLACE_ORDER), by = -0.01)))
 
+# nudged x-axis position for plotly
+node_x_nudge_2 = c(seq(0.01, length.out = length(DISTRICT_ORDER), by = 0.01), rep(1, length(WORKPLACE_ORDER)))
+
+# nudged x-axis position for plotly
+# head() to trim additional values
+node_x_nudge_3 = c(head(rep(c(0, .01), ceiling(length(DISTRICT_ORDER)/2)), length(DISTRICT_ORDER)),
+                   head(rep(c(1, .99), ceiling(length(WORKPLACE_ORDER)/2)), length(WORKPLACE_ORDER)))
+
+
 nodes_OD_wposition = nodes_OD %>%
   bind_cols(
     node_y = node_y,
-    node_x_nudge = node_x_nudge) %>%
+    node_x_nudge = node_x_nudge,
+    node_x_nudge_2 = node_x_nudge_2,
+    node_x_nudge_3 = node_x_nudge_3) %>%
   mutate(node_x = ifelse(node_ID <= 17, 0, 1))
   
 ```
-
 
 
 ```{r}
@@ -591,7 +606,7 @@ fig <- plot_ly(
       # x = nodes_OD_wposition[["node_x"]],
       # y = nodes_OD_wposition[["node_y"]],
       color = "#666666",
-      pad = 15,
+      pad = 20,
       thickness = 20,
       line = list(
         color = "black",
@@ -625,7 +640,9 @@ fig_rmspecial <- plot_ly(
     orientation = "h",
 
     node = list(
-      label = nodes_OD[["node_name"]],
+      label = nodes_OD_wposition[["node_name"]],
+      x = nodes_OD_wposition[["node_x"]],
+      y = nodes_OD_wposition[["node_y"]],
       color = "#666666",
       pad = 15,
       thickness = 20,
@@ -658,7 +675,7 @@ fig_rmspecial
 ```{r}
 nodes_OD_fromHKI = nodes_OD_wposition %>%
   filter(node_ID <=3 | (node_ID >= 18)) %>%
-  mutate(node_ID = ifelse(node_ID <=3 , node_ID, node_ID - 14))
+  mutate(node_ID = ifelse(node_ID <= 3 , node_ID, node_ID - 14))
 
 work_OD_plot_reorder_plotly_fromHKI_increID = work_OD_plot_reorder_plotly_fromHKI %>%
   mutate(destination_ID = destination_ID - 14)
@@ -673,8 +690,8 @@ fig_fromHKI <- plot_ly(
 
     node = list(
       label = nodes_OD_fromHKI[["node_name"]],
-      # x = nodes_OD_fromHKI[["node_x"]],
-      # y = nodes_OD_fromHKI[["node_y"]],
+      x = nodes_OD_fromHKI[["node_x"]],
+      y = nodes_OD_fromHKI[["node_y"]],
       color = "#666666",
       pad = 15,
       thickness = 20,
@@ -721,9 +738,9 @@ fig_fromtoHKI <- plot_ly(
     orientation = "h",
 
     node = list(
-      label = nodes_OD_wposition[["node_name"]],
-      x = nodes_OD_wposition[["node_x"]],
-      y = nodes_OD_wposition[["node_y"]],
+      label = nodes_OD_fromtoHKI[["node_ID"]],
+      x = nodes_OD_fromtoHKI[["node_x_nudge_3"]],
+      y = nodes_OD_fromtoHKI[["node_y"]],
       color = "#666666",
       pad = 15,
       thickness = 20,
@@ -835,7 +852,7 @@ fig_test <- plot_ly(
 
     node = list(
       label = c("A", "B", "C", "D", "E", "F", "G", "H"),
-      x = c(0, 0.01, 0, 0, 1, 1, 1, 1),
+      x = c(0, 0.01, 0.02, 0, 1, 1, 1, 1),
       y = c(0, .33, .66, 1, 0, .33, .66, 1),
       pad = 10
     ),

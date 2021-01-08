@@ -10,11 +10,10 @@
 library(shiny)
 library(shinythemes)
 
-library(tidyr)
-library(dplyr)
-library(magrittr)
-library(ggplot2)
+library(tidyverse)
 library(ggalluvial)
+
+library(plotly)
 
 DISTRICT_ORDER <- c("Central and Western", "Wan Chai", "Eastern", "Southern",
                     "Yau Tsim Mong", "Sham Shui Po", "Kowloon City", "Wong Tai Sin", "Kwun Tong",
@@ -31,7 +30,6 @@ DISTRICT_ORDER_CHI <- c("中西區", "灣仔", "東區", "南區",
                         "油尖旺", "深水埗", "九龍城", "黃大仙", "觀塘",
                         "葵青", "荃灣", "屯門", "元朗",
                         "北區", "大埔", "沙田", "西貢", "離島")
-
 WORKPLACE_ORDER_CHI <- c("中西區", "灣仔", "東區", "南區",
                          "油尖旺", "深水埗", "九龍城", "黃大仙", "觀塘",
                          "葵涌新市鎮", "荃灣新市鎮", "青衣新市鎮", "屯門新市鎮", "天水圍新市鎮", "元朗新市鎮",
@@ -46,11 +44,41 @@ dataset <- read_csv("data/data-output/cross_travel_type_rmspecial.csv") %>%
         place_of_work_chi = factor(place_of_work_chi, WORKPLACE_ORDER_CHI)
     )
 
+nodes_OD <- read_csv("data/data-output/nodes_OD.csv")
+
+WORKPLACE_ORDER_SIM = c("Central and Western", "Wan Chai", "Eastern", "Southern",
+                        "Yau Tsim Mong", "Sham Shui Po", "Kowloon City", "Wong Tai Sin", "Kwun Tong",
+                        "Kwai Chung NT", "Tsuen Wan NT", "Tsing Yi NT", "Tuen Mun NT", "Tin Shui Wai NT", "Yuen Long NT",
+                        "Fanling/ Sheung Shui NT", "Tai Po NT", "Sha Tin NT", "Ma On Shan NT", "Tseung Kwan O NT", "North Lantau NT",
+                        "Others")
+
+dataset_simlabel = dataset %>%
+    mutate(
+        place_of_work_sim = ifelse(place_of_work == "Other areas in the New Territories", "Others", str_replace(place_of_work, "New Town", "NT"))
+    ) %>%
+    mutate(
+        place_of_work_sim = factor(place_of_work_sim, WORKPLACE_ORDER_SIM)
+    )
+
+
+# add colour code for links
+work_OD_plot_reorder_plotly = dataset %>%
+    mutate(
+        link_colour = case_when(
+            residence_area == "HKI" ~ "#E41A1C33",
+            residence_area == "KL" ~ "#4DAF4A33",
+            residence_area == "NTW" ~ "#FF7F0033",
+            residence_area == "NTE" ~ "#984EA333",
+            residence_area == "I" ~ "#377EB833"
+        )
+    )
+
+
 # Define UI for application that draws a histogram
 ui <- fluidPage(
 
     # Theme options --------
-    theme = shinytheme("flatly"),
+    # theme = shinytheme("flatly"),
     includeCSS("style.css"),
     
     
@@ -59,9 +87,9 @@ ui <- fluidPage(
     
     fluidRow(
         
-        column(3 ,
+        column(6 ,
     
-    checkboxGroupInput("checkGroup", 
+    checkboxGroupInput("residence_group", 
                       h3("Place of residence"), 
                       choices = list("Central and Western" = 0, 
                                      "Wan Chai" = 1, 
@@ -84,18 +112,63 @@ ui <- fluidPage(
                       selected = 2),
         ),
     
-    column(9,
-           # Show a plot of the generated distribution
-           mainPanel(
-               plotOutput("alluPlot")
-           ),
-           
-           hr(),
-           
-           )
-    ),
+    column(6 ,
+
+           checkboxGroupInput("work_group",
+                              h3("Place of work (TODO)"),
+                              choices = list("Central and Western" = 0,
+                                             "Wan Chai" = 1,
+                                             "Eastern" = 2,
+                                             "Southern" = 3,
+                                             "Yau Tsim Mong" = 4,
+                                             "Sham Shui Po" = 5,
+                                             "Kowloon City" = 6,
+                                             "Wong Tai Sin" = 7,
+                                             "Kwun Tong" = 8,
+                                             "Kwai Tsing" = 9,
+                                             "Tsuen Wan" = 10,
+                                             "Tuen Mun" = 11,
+                                             "Yuen Long" = 12,
+                                             "North" = 13,
+                                             "Tai Po" = 14,
+                                             "Sha Tin" = 15,
+                                             "Sai Kung" = 16,
+                                             "Islands" = 17),
+                              selected = 2),
+    )
     
 
+    ),
+
+    
+    fluidRow(
+        
+        column(12,
+               plotlyOutput("Heatmap")
+        )
+        
+    ),
+    
+    # fluidRow(
+    #     column(12,
+    #            
+    #            # Show a plot of the generated distribution
+    #            mainPanel(
+    #                plotOutput("alluPlot")
+    #            ),
+    #            
+    #            hr(),
+    #            
+    #     )
+    # ),
+    
+    fluidRow(
+        
+        column(12,
+               plotlyOutput("sankey")
+        )
+        
+    ),
 
 
     
@@ -115,10 +188,10 @@ server <- function(input, output) {
 
     output$alluPlot <- renderPlot({
         
-        req(input$checkGroup)
+        req(input$residence_group)
         
         dataset_selected <- dataset %>%
-            subset(origin_ID %in% input$checkGroup)
+            subset(origin_ID %in% input$residence_group)
 
         
         OD_work_alluvial_travelcolour_mant = ggplot(dataset_selected, aes(y = N_workers, axis1 = place_of_residence, axis2 = place_of_work)) +
@@ -126,15 +199,15 @@ server <- function(input, output) {
             geom_stratum(width = .2, fill = "#EEEEEE", color = "#FFFFFF") +
             # http://corybrunson.github.io/ggalluvial/reference/stat_stratum.html
             # https://stackoverflow.com/questions/29465941/format-number-in-r-with-both-comma-thousands-separator-and-specified-decimals
-            geom_text(stat = "stratum", aes(label = paste0(after_stat(stratum), "\n", after_stat(format(count, big.mark=",")))), size = 2) +
+            geom_text(stat = "stratum", aes(label = paste0(after_stat(stratum), "\n", after_stat(format(count, big.mark=",")))), size = 4) +
             scale_x_discrete(limits = c("Place of \nResidence", "Place of \nWork"), expand = c(.05, .05), position = "top") +
             scale_fill_manual(values = MA_NT_PALETTE, aesthetics = c("colour", "fill")) +
             # scale_fill_brewer(type = "qual", palette = "Set1") +
+            coord_cartesian(clip = 'off') +
             theme_void() +
             theme(
                 axis.text.x = element_text(size = 12),
                 legend.position = "None",
-                aspect.ratio = 3/1
             ) +
             labs(
                 title = "Flow of commuters",
@@ -143,7 +216,87 @@ server <- function(input, output) {
             )
         
         OD_work_alluvial_travelcolour_mant
-    }, height = 900,width = 300)
+    }, height = 1200, width = 600)
+    
+    output$Heatmap <- renderPlotly({
+        req(input$residence_group)
+        
+        dataset_simlabel_selected <- dataset_simlabel %>%
+            subset(origin_ID %in% input$residence_group)
+        
+        od_workers_plotly = ggplot(dataset_simlabel_selected, 
+                                   aes(x = place_of_work_sim,
+                                       y = fct_rev(place_of_residence),
+                                       text = paste0("Place of Residence: ", place_of_residence, "\n", "Place of Work: ", place_of_work_sim, "\n", "Number of Workers: ", formattable::comma(N_workers, digits = 0)),
+                                       fill = N_workers)
+        ) +
+            geom_tile(color = "#EEEEEE", size = 1) +
+            geom_vline(xintercept = c(4.5, 9.5), color = "#ffffff") +
+            geom_hline(yintercept = c(9.5, 14.5), color = "#ffffff") +
+            scale_fill_viridis_c(option = "A", direction = -1, trans = "log") +
+            scale_x_discrete(position = "top") +
+            theme_bw() +
+            theme(
+                axis.text.x = element_text(angle = 90, vjust = -1, hjust = 0),
+            ) +
+            labs(
+                y = "Place of residence",
+                x = "Place of work",
+                title = "The OD of workers"
+            )
+        
+        # workaround for transformed colour scale
+        # https://stackoverflow.com/questions/54107531/ggplotly-mouse-values-while-using-a-log-transformed-color-scale
+        
+        ggplotly(od_workers_plotly, tooltip = c("text"), height = 540, width = 660)
+        
+    })
+    
+    output$sankey <- renderPlotly({
+        req(input$residence_group)
+        
+        work_OD_plot_reorder_plotly_selected <- work_OD_plot_reorder_plotly %>%
+            subset(origin_ID %in% input$residence_group)
+        
+        fig <- plot_ly(
+            type = "sankey",
+            arrangement = "snap",
+            orientation = "h",
+            
+            node = list(
+                label = nodes_OD[["node_name"]],
+                # x = nodes_OD_wposition[["node_x"]],
+                # y = nodes_OD_wposition[["node_y"]],
+                color = "#666666",
+                pad = 20,
+                thickness = 20,
+                line = list(
+                    color = "black",
+                    width = 0.5
+                )
+            ),
+            
+            link = list(
+                source = work_OD_plot_reorder_plotly_selected[["origin_ID"]],
+                target = work_OD_plot_reorder_plotly_selected[["destination_ID"]],
+                value = work_OD_plot_reorder_plotly_selected[["N_workers"]],
+                color = work_OD_plot_reorder_plotly_selected[["link_colour"]]
+                
+            )
+        )
+        
+        fig <- fig %>% layout(
+            title = "Basic Sankey Diagram",
+            font = list(
+                size = 10
+            ),
+            width = 600,
+            height = 1200
+        )
+        
+        fig
+        
+    })
 }
 
 # Run the application 
