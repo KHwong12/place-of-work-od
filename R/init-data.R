@@ -55,6 +55,9 @@ dataset_simlabel = dataset %>%
   )
 
 
+JOURNEY_TYPE_COLOURS_1 = c("Same Area" = "#4daf4a", "HKI/KL" = "#377eb8", "HKI/NT" = "#ff7f00", "KL/NT" = "#984ea3")
+
+
 # add colour code for links
 work_OD_plot_reorder_plotly = dataset %>%
   mutate(
@@ -64,5 +67,11 @@ work_OD_plot_reorder_plotly = dataset %>%
       residence_area == "NTW" ~ "#FF7F0033",
       residence_area == "NTE" ~ "#984EA333",
       residence_area == "I" ~ "#377EB833"
+    ),
+    journey_type_colour = case_when(
+      journey_type_mostsim == "Same Area" ~ "#4daf4a33",
+      journey_type_mostsim == "HKI/KL" ~ "#377eb833",
+      journey_type_mostsim == "HKI/NT" ~ "#ff7f0033",
+      journey_type_mostsim == "KL/NT" ~ "#984ea333"
     )
   )

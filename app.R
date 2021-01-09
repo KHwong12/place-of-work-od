@@ -84,8 +84,23 @@ ui <- fluidPage(
 
     ),
     
+    hr(),
+    
+    h2("The OD of workers"),
+    
     plotlyOutput("odHeatmap", height = "1000px"),
-    plotlyOutput("sankey", height = "1200px"),
+    
+    hr(),
+    
+    h2("The flow of workers"),
+    
+    fluidRow(width = 12, plotlyOutput("sankey", height = "1200px"), align = 'center'),
+    
+    # plotlyOutput("sankey", height = "1200px"),
+    
+    hr(),
+    
+    h2("The cross-district nightmare"),
     
     plotOutput("alluPlot", height = "1200px"),
 
@@ -177,14 +192,14 @@ server <- function(input, output, session, ...) {
                 source = work_OD_plot_reorder_plotly_selected[["origin_ID"]],
                 target = work_OD_plot_reorder_plotly_selected[["destination_ID"]],
                 value = work_OD_plot_reorder_plotly_selected[["N_workers"]],
-                color = work_OD_plot_reorder_plotly_selected[["link_colour"]],
+                color = work_OD_plot_reorder_plotly_selected[["journey_type_colour"]],
                 hovertemplate = 'There are %{value:.5d} workers<br />living in <b>%{source.label}</b> and<br />working in <b>%{target.label}</b>'
                 
             )
         )
         
         fig <- fig %>% layout(
-            title = "Basic Sankey Diagram",
+            title = "Flow of workers",
             font = list(
                 size = 10
             )
