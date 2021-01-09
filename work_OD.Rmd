@@ -320,7 +320,7 @@ cross_travel_type = work_OD_plot_reorder %>%
   ) %>%
   # HKI, KL, NT, Others
   mutate(
-    jounrney_type_mostsim = case_when(
+    journey_type_mostsim = case_when(
       travel_dir %in% c("HKI to HKI", "KL to KL", "NTW to NTW", "NTE to NTE", "I to I", "NTW to I", "I to NTW", "NTW to NTE", "NTE to NTW", "NTE to I", "I to NTE", "NTW to NT_Others", "NTE to NT_Others", "I to NT_Others") ~ "Same Area",
       travel_dir %in% c("HKI to KL", "KL to HKI") ~ "HKI/KL",
       travel_dir %in% c("HKI to NTW", "NTW to HKI", "HKI to I", "I to HKI", "HKI to NTE", "NTE to HKI", "HKI to NT_Others") ~ "HKI/NT",
@@ -352,7 +352,7 @@ JOURNEY_TYPE_COLOURS_1 = c("Same Area" = "#4daf4a", "HKI/KL" = "#377eb8", "HKI/N
 JOURNEY_TYPE_COLOURS_2 = c("Same Area" = "#66c2a5", "HKI/KL" = "#8da0cb", "HKI/NT" = "#e78ac3", "KL/NT" = "#fc8d62")
 
 OD_work_alluvial_travelcolour = ggplot(cross_travel_type_rmspecial, aes(y = N_workers, axis1 = place_of_residence, axis2 = place_of_work)) +
-  geom_alluvium(aes(fill = jounrney_type_mostsim), width = .2, alpha = .4) +
+  geom_alluvium(aes(fill = journey_type_mostsim), width = .2, alpha = .4) +
   geom_stratum(width = .2, fill = "#EEEEEE", color = "#FFFFFF") +
   # http://corybrunson.github.io/ggalluvial/reference/stat_stratum.html
   # https://stackoverflow.com/questions/29465941/format-number-in-r-with-both-comma-thousands-separator-and-specified-decimals
