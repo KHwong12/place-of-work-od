@@ -78,7 +78,7 @@ work_OD_plot_reorder_plotly = dataset %>%
 ui <- fluidPage(
 
     # Theme options --------
-    # theme = shinytheme("flatly"),
+    theme = shinytheme("flatly"),
     includeCSS("style.css"),
     
     
@@ -109,7 +109,7 @@ ui <- fluidPage(
                                      "Sha Tin" = 15,
                                      "Sai Kung" = 16,
                                      "Islands" = 17),
-                      selected = 2),
+                      selected = 0, 1, 2, 3),
         ),
     
     column(6 ,
@@ -139,37 +139,11 @@ ui <- fluidPage(
     
 
     ),
-
     
-    fluidRow(
-        
-        column(12,
-               plotlyOutput("Heatmap")
-        )
-        
-    ),
+    plotlyOutput("odHeatmap", height = "1000px"),
+    plotlyOutput("sankey", height = "1200px"),
     
-    # fluidRow(
-    #     column(12,
-    #            
-    #            # Show a plot of the generated distribution
-    #            mainPanel(
-    #                plotOutput("alluPlot")
-    #            ),
-    #            
-    #            hr(),
-    #            
-    #     )
-    # ),
-    
-    fluidRow(
-        
-        column(12,
-               plotlyOutput("sankey")
-        )
-        
-    ),
-
+    plotOutput("alluPlot", height = "1200px"),
 
     
     
@@ -180,45 +154,16 @@ ui <- fluidPage(
         includeHTML("template/footer.html")
     )
 )
-
+    
 # Define server logic required to draw a histogram
-server <- function(input, output) {
+server <- function(input, output, session, ...) {
     
-    MA_NT_PALETTE = c("FALSE" = "#377eb8", "TRUE" = "#e25a61")
-
-    output$alluPlot <- renderPlot({
-        
-        req(input$residence_group)
-        
-        dataset_selected <- dataset %>%
-            subset(origin_ID %in% input$residence_group)
-
-        
-        OD_work_alluvial_travelcolour_mant = ggplot(dataset_selected, aes(y = N_workers, axis1 = place_of_residence, axis2 = place_of_work)) +
-            geom_alluvium(aes(fill = is_cross_ma_nt), width = .2, alpha = .4) +
-            geom_stratum(width = .2, fill = "#EEEEEE", color = "#FFFFFF") +
-            # http://corybrunson.github.io/ggalluvial/reference/stat_stratum.html
-            # https://stackoverflow.com/questions/29465941/format-number-in-r-with-both-comma-thousands-separator-and-specified-decimals
-            geom_text(stat = "stratum", aes(label = paste0(after_stat(stratum), "\n", after_stat(format(count, big.mark=",")))), size = 4) +
-            scale_x_discrete(limits = c("Place of \nResidence", "Place of \nWork"), expand = c(.05, .05), position = "top") +
-            scale_fill_manual(values = MA_NT_PALETTE, aesthetics = c("colour", "fill")) +
-            # scale_fill_brewer(type = "qual", palette = "Set1") +
-            coord_cartesian(clip = 'off') +
-            theme_void() +
-            theme(
-                axis.text.x = element_text(size = 12),
-                legend.position = "None",
-            ) +
-            labs(
-                title = "Flow of commuters",
-                subtitle = "Place of residence and work of commuters in Hong Kong",
-                caption = "Note: workers with no fixed places of work or \nwork in Marine/at home/in places outside Hong Kong are excluded."
-            )
-        
-        OD_work_alluvial_travelcolour_mant
-    }, height = 1200, width = 600)
+    # https://community.rstudio.com/t/controlling-the-height-of-fluidrow-in-shiny/4968/2
+    # to relay the height/width of the plot's container, we'll query this 
+    # session's client data http://shiny.rstudio.com/articles/client-data.html
+    cdata <- session$clientData
     
-    output$Heatmap <- renderPlotly({
+    output$odHeatmap <- renderPlotly({
         req(input$residence_group)
         
         dataset_simlabel_selected <- dataset_simlabel %>%
@@ -248,11 +193,13 @@ server <- function(input, output) {
         # workaround for transformed colour scale
         # https://stackoverflow.com/questions/54107531/ggplotly-mouse-values-while-using-a-log-transformed-color-scale
         
-        ggplotly(od_workers_plotly, tooltip = c("text"), height = 540, width = 660)
+        ggplotly(od_workers_plotly, tooltip = c("text"), width = cdata$output_odHeatmap_width, height = 800)
+        # ggplotly(od_workers_plotly, tooltip = c("text"), width = cdata$output_odHeatmap_width, height = cdata$output_odHeatmap_height)
         
     })
     
     output$sankey <- renderPlotly({
+        
         req(input$residence_group)
         
         work_OD_plot_reorder_plotly_selected <- work_OD_plot_reorder_plotly %>%
@@ -262,6 +209,8 @@ server <- function(input, output) {
             type = "sankey",
             arrangement = "snap",
             orientation = "h",
+            width = 600,
+            height = 1200,
             
             node = list(
                 label = nodes_OD[["node_name"]],
@@ -273,14 +222,19 @@ server <- function(input, output) {
                 line = list(
                     color = "black",
                     width = 0.5
-                )
+                ),
+                # https://plotly.com/r/hover-text-and-formatting/
+                # printf format for numbers
+                # https://stackoverflow.com/questions/23718936/explanation-for-sprintf03d-7-functionality/23719045
+                hovertemplate = '<b>%{label}</b> <br />Number of workers: %{value:.5d}'
             ),
             
             link = list(
                 source = work_OD_plot_reorder_plotly_selected[["origin_ID"]],
                 target = work_OD_plot_reorder_plotly_selected[["destination_ID"]],
                 value = work_OD_plot_reorder_plotly_selected[["N_workers"]],
-                color = work_OD_plot_reorder_plotly_selected[["link_colour"]]
+                color = work_OD_plot_reorder_plotly_selected[["link_colour"]],
+                hovertemplate = 'There are %{value:.5d} workers<br />living in <b>%{source.label}</b> and<br />working in <b>%{target.label}</b>'
                 
             )
         )
@@ -289,14 +243,46 @@ server <- function(input, output) {
             title = "Basic Sankey Diagram",
             font = list(
                 size = 10
-            ),
-            width = 600,
-            height = 1200
+            )
         )
         
         fig
         
     })
+    
+    MA_NT_PALETTE <- c("FALSE" = "#377eb8", "TRUE" = "#e25a61")
+    
+    output$alluPlot <- renderPlot({
+        
+        req(input$residence_group)
+        
+        dataset_selected <- dataset %>%
+            subset(origin_ID %in% input$residence_group)
+        
+        
+        OD_work_alluvial_travelcolour_mant = ggplot(dataset_selected, aes(y = N_workers, axis1 = place_of_residence, axis2 = place_of_work)) +
+            geom_alluvium(aes(fill = is_cross_ma_nt), width = .2, alpha = .4) +
+            geom_stratum(width = .2, fill = "#EEEEEE", color = "#FFFFFF") +
+            # http://corybrunson.github.io/ggalluvial/reference/stat_stratum.html
+            # https://stackoverflow.com/questions/29465941/format-number-in-r-with-both-comma-thousands-separator-and-specified-decimals
+            geom_text(stat = "stratum", aes(label = paste0(after_stat(stratum), "\n", after_stat(format(count, big.mark=",")))), size = 4) +
+            scale_x_discrete(limits = c("Place of \nResidence", "Place of \nWork"), expand = c(.05, .05), position = "top") +
+            scale_fill_manual(values = MA_NT_PALETTE, aesthetics = c("colour", "fill")) +
+            # scale_fill_brewer(type = "qual", palette = "Set1") +
+            coord_cartesian(clip = 'off') +
+            theme_void() +
+            theme(
+                axis.text.x = element_text(size = 12),
+                legend.position = "None",
+            ) +
+            labs(
+                title = "Flow of commuters",
+                subtitle = "Place of residence and work of commuters in Hong Kong",
+                caption = "Note: workers with no fixed places of work or \nwork in Marine/at home/in places outside Hong Kong are excluded."
+            )
+        
+        OD_work_alluvial_travelcolour_mant
+    }, height = 1200, width = 600)
 }
 
 # Run the application 
