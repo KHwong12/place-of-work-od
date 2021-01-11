@@ -34,6 +34,23 @@ WORKPLACE_ORDER_SIM = c("Central and Western", "Wan Chai", "Eastern", "Southern"
 dataset <- read_csv("data/data-output/cross_travel_type_rmspecial.csv")
 
 nodes_OD <- read_csv("data/data-output/nodes_OD.csv")
+regions_list <- read_csv("data/data-output/regions_list.csv")
+
+
+origin_df <- regions_list %>% subset(node_ID <= 17)
+destination_df <- regions_list %>% subset(node_ID > 17)
+
+# get name list from df
+# https://stackoverflow.com/questions/46238448/make-a-named-list-from-two-columns-with-multiple-values-per-name
+origin_choice_list <- split(origin_df$node_ID, origin_df$node_name)
+
+# reorder
+# https://stackoverflow.com/questions/30651365/sorting-a-key-value-list-in-r-by-value
+origin_choice_list <- origin_choice_list[order(unlist(origin_choice_list))]
+
+destination_choice_list <- split(destination_df$node_ID, destination_df$node_name)
+destination_choice_list <- destination_choice_list[order(unlist(destination_choice_list))]
+
 
 
 dataset <- dataset %>% 
@@ -46,7 +63,7 @@ dataset <- dataset %>%
 
 
 # simplified label for heatmap
-dataset_simlabel = dataset %>%
+dataset_simlabel <- dataset %>%
   mutate(
     place_of_work_sim = ifelse(place_of_work == "Other areas in the New Territories", "Others", str_replace(place_of_work, "New Town", "NT"))
   ) %>%
@@ -55,11 +72,8 @@ dataset_simlabel = dataset %>%
   )
 
 
-JOURNEY_TYPE_COLOURS_1 = c("Same Area" = "#4daf4a", "HKI/KL" = "#377eb8", "HKI/NT" = "#ff7f00", "KL/NT" = "#984ea3")
-
-
 # add colour code for links
-work_OD_plot_reorder_plotly = dataset %>%
+work_OD_plot_reorder_plotly = dataset_simlabel %>%
   mutate(
     link_colour = case_when(
       residence_area == "HKI" ~ "#E41A1C33",

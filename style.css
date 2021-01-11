@@ -44,3 +44,13 @@ footer {
 .form-group, .shiny-input-container {
   margin: auto;
 }
+
+
+div.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  background-color: white;
+  top: 0;
+  padding: 10px;
+  font-size: 20px;
+}
