@@ -1,3 +1,12 @@
+.container-fluid {
+  max-width: 768px;
+}
+
+p {
+  font-size: 18px;
+  line-height: 1.55em;
+}
+
 h4 {
   text-align: center;
 }
@@ -47,10 +56,17 @@ footer {
 
 
 div.sticky {
-  position: -webkit-sticky;
-  position: sticky;
+  position: relative;
   background-color: white;
   top: 0;
   padding: 10px;
   font-size: 20px;
+}
+
+/* sticky only when browser supports */
+@supports (position: sticky) {
+  div.sticky {
+    z-index: 9999;
+    position: sticky;
+  }
 }
