@@ -17,6 +17,7 @@ DISTRICT_ORDER_CHI <- c("中西區", "灣仔", "東區", "南區",
                         "油尖旺", "深水埗", "九龍城", "黃大仙", "觀塘",
                         "葵青", "荃灣", "屯門", "元朗",
                         "北區", "大埔", "沙田", "西貢", "離島")
+
 WORKPLACE_ORDER_CHI <- c("中西區", "灣仔", "東區", "南區",
                          "油尖旺", "深水埗", "九龍城", "黃大仙", "觀塘",
                          "葵涌新市鎮", "荃灣新市鎮", "青衣新市鎮", "屯門新市鎮", "天水圍新市鎮", "元朗新市鎮",
@@ -44,7 +45,7 @@ destination_df <- regions_list %>% subset(node_ID > 17)
 # https://stackoverflow.com/questions/46238448/make-a-named-list-from-two-columns-with-multiple-values-per-name
 origin_choice_list <- split(origin_df$node_ID, origin_df$node_name)
 
-# reorder
+# reorder by the node_ID
 # https://stackoverflow.com/questions/30651365/sorting-a-key-value-list-in-r-by-value
 origin_choice_list <- origin_choice_list[order(unlist(origin_choice_list))]
 
@@ -52,28 +53,27 @@ destination_choice_list <- split(destination_df$node_ID, destination_df$node_nam
 destination_choice_list <- destination_choice_list[order(unlist(destination_choice_list))]
 
 
+origin_choice_list_tc <- split(origin_df$node_ID, origin_df$node_name_tc)
+origin_choice_list_tc <- origin_choice_list_tc[order(unlist(origin_choice_list_tc))]
+destination_choice_list_tc <- split(destination_df$node_ID, destination_df$node_name_tc)
+destination_choice_list_tc <- destination_choice_list_tc[order(unlist(destination_choice_list_tc))]
 
-dataset <- dataset %>% 
+
+dataset_simlabel <- dataset %>% 
   mutate(
     place_of_residence = factor(place_of_residence, DISTRICT_ORDER),
     place_of_work = factor(place_of_work, WORKPLACE_ORDER),
     place_of_residence_chi = factor(place_of_residence_chi, DISTRICT_ORDER_CHI),
     place_of_work_chi = factor(place_of_work_chi, WORKPLACE_ORDER_CHI)
-  )
-
-
-# simplified label for heatmap
-dataset_simlabel <- dataset %>%
+  ) %>%
+  # simplified label for heatmap
   mutate(
     place_of_work_sim = ifelse(place_of_work == "Other areas in the New Territories", "Others", str_replace(place_of_work, "New Town", "NT"))
   ) %>%
   mutate(
     place_of_work_sim = factor(place_of_work_sim, WORKPLACE_ORDER_SIM)
-  )
-
-
-# add colour code for links
-work_OD_plot_reorder_plotly = dataset_simlabel %>%
+  ) %>%
+  # add colour code for links
   mutate(
     link_colour = case_when(
       residence_area == "HKI" ~ "#E41A1C33",
@@ -89,3 +89,6 @@ work_OD_plot_reorder_plotly = dataset_simlabel %>%
       journey_type_mostsim == "KL/NT" ~ "#984ea333"
     )
   )
+
+# may consider remove unused columns to improve drawing speed
+work_OD_plot_reorder_plotly <- dataset_simlabel
