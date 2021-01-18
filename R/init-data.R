@@ -83,10 +83,10 @@ dataset_simlabel <- dataset %>%
       residence_area == "I" ~ "#377EB833"
     ),
     journey_type_colour = case_when(
-      journey_type_mostsim == "Same Area" ~ "#4daf4a33",
-      journey_type_mostsim == "HKI/KL" ~ "#377eb833",
-      journey_type_mostsim == "HKI/NT" ~ "#ff7f0033",
-      journey_type_mostsim == "KL/NT" ~ "#984ea333"
+      journey_type_mostsim == "Same Area" ~ "#4daf4a66",
+      journey_type_mostsim == "HKI/KL" ~ "#377eb866",
+      journey_type_mostsim == "HKI/NT" ~ "#ff7f0066",
+      journey_type_mostsim == "KL/NT" ~ "#984ea366"
     )
   )
 
