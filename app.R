@@ -29,13 +29,13 @@ ui <- fluidPage(
   theme = shinytheme("flatly"),
   includeCSS("style.css"),
   
-  # meta(meta_social(
-  #   title = "metathis",
-  #   description = "<meta> and social media cards for web things in R",
-  #   url = "https://pkg.garrickadenbuie.com/metathis",
-  #   image = "https://garrickadenbuie.com/apple-touch-icon-114x114.png",
-  #   image_alt = "An image for social meda cards"
-  # )),
+  meta_social(
+    .meta = meta(),
+    title = "The great migration of workers",
+    description = "Interactive visualisation of commuting flows of 3 million workers in Hong Kong",
+    url = "https://kenneth-12.shinyapps.io/place-of-work-od",
+    image = ""
+  ),
 
 
   # Application title
