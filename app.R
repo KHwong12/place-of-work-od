@@ -81,25 +81,24 @@ ui <- fluidPage(
         column(
           6,
           
-        
-        # Destination picker
-        pickerInput(
-          "work_group",
-          label = "Place of work",
-          choices = destination_choice_list,
-          selected = destination_df$node_ID[5:9], # 22 - 26 (Kowloon)
-          multiple = TRUE,
-          options = list(
-            `actions-box` = TRUE,
-            `deselect-all-text` = "Unselect All",
-            `select-all-text` = "Select All",
-            `none-selected-text` = "Select Region(s)...",
-            `selected-text-format`= "count",
-            `count-selected-text` = "{0} regions choosed (on a total of {1})"
-          ),
-          choicesOpt = NULL,
-          width = NULL,
-          inline = FALSE
+          # Destination picker
+          pickerInput(
+            "work_group",
+            label = "Place of work",
+            choices = destination_choice_list,
+            selected = destination_df$node_ID[5:9], # 22 - 26 (Kowloon)
+            multiple = TRUE,
+            options = list(
+              `actions-box` = TRUE,
+              `deselect-all-text` = "Unselect All",
+              `select-all-text` = "Select All",
+              `none-selected-text` = "Select Region(s)...",
+              `selected-text-format`= "count",
+              `count-selected-text` = "{0} regions choosed (on a total of {1})"
+            ),
+            choicesOpt = NULL,
+            width = NULL,
+            inline = FALSE
         )
       )
     )
@@ -112,8 +111,8 @@ ui <- fluidPage(
   p("How many people are working from/to each district? The following heatmap helps you grasp a quick understanding
     about the travel pattern. The vertical axis list the districts workers are living in, and the horizontol axis 
     list the working location, classified by districts. Each square in the plot refers to the number of workers",
-    tags$b("living"), "in that row and", tags$b("working"), "in that column. Darker the colour of the square, more 
-    workers are in that living/working place pattern."),
+    tags$b("living"), "in that", tags$i("row"), "and", tags$b("working"), "in that", tags$i("column"), ". ", 
+    tags$i("Darker the colour"), "of the square, ", tags$b("more workers"), "are in that living/working place pattern."),
   
   p("When hovering on the grids, a tooltip will appear, showing the exact number of workers falling to that category."),
 
@@ -126,7 +125,7 @@ ui <- fluidPage(
   h2("The flow of workers"),
   
   p("Here we have a bunch of 'flows' meandering from left to right: each flow comprises of the total number of workers
-    living in the area stated in the box on the left and workiong in the area stated in box on the right. The color of
+    living in the area stated in the box on the left and working in the area stated in box on the right. The color of
     the flows are classified according to the travel type, including:"),
   
   tags$ul(
@@ -150,9 +149,19 @@ ui <- fluidPage(
 
   hr(),
 
-  h2("The cross-district nightmare"),
+  h2("How is your area of interest compared to overall?"),
   
-  p("PLACEHOLDER"),
+  p("While the above plot helps you to understand the flow inside your selected origin and destination regions,
+    how the selected commuters flows contribute to the overall pattern is not observable. Say, how much do the 
+    selected flows comprises of the total number of flows? The plot below helps you to understand your selected 
+    area of interest from the overall perspective."),
+  
+  p("The flows from your selected regions of origins/destinations 
+    are highlighted, while those unselected are in grey. You could grasp the quick looks on how your selected OD
+    flows comprises the total."),
+  
+  p("When you select only one origin and select all destinations (or vice versa), you could produce a highlighted 
+    chart designated to your area of interest."),
 
   plotOutput("alluPlot", height = "1200px"),
   
@@ -187,7 +196,9 @@ server <- function(input, output, session, ...) {
       aes(
         x = place_of_work_sim,
         y = fct_rev(place_of_residence),
-        text = paste0("Place of Residence: ", place_of_residence, "\n", "Place of Work: ", place_of_work_sim, "\n", "Number of Workers: ", formattable::comma(N_workers, digits = 0)),
+        text = paste0("Place of Residence: ", place_of_residence, "\n",
+                      "Place of Work: ", place_of_work_sim, "\n",
+                      "Number of Workers: ", formattable::comma(N_workers, digits = 0)),
         fill = N_workers
       )
     ) +
@@ -211,7 +222,10 @@ server <- function(input, output, session, ...) {
     # https://stackoverflow.com/questions/54107531/ggplotly-mouse-values-while-using-a-log-transformed-color-scale
     
     # width should be between 300 to max width
-    width_heatmap = ifelse(cdata$output_odHeatmap_width > MAX_SCREEN_WIDTH, MAX_SCREEN_WIDTH, max(cdata$output_odHeatmap_width, MIN_SCREEN_WIDTH))
+    width_heatmap = ifelse(cdata$output_odHeatmap_width > MAX_SCREEN_WIDTH,
+                           MAX_SCREEN_WIDTH,
+                           # ensure minimum width is 300
+                           max(cdata$output_odHeatmap_width, MIN_SCREEN_WIDTH))
     height_heatmap = width_heatmap * 18/22
   
     # ggplotly cannot handle subtitle
@@ -268,11 +282,13 @@ server <- function(input, output, session, ...) {
     
     od_sankey_plotly <- od_sankey_plotly %>%
       layout(
-        title = list(text = paste0('The flow of workers',
-                                 '<br>',
-                                 '<sup>',
-                                 'Magnitude of the flow of the commuters across the territory, classified by flows\' origin/destination',
-                                 '</sup>'))
+        title = list(
+          text = paste0('Workers flowing',
+                        '<br>',
+                        '<sup>',
+                        'Flow of the commuters across the territory, classified by flows\' origin/destination',
+                        '</sup>')
+        )
     )
 
     od_sankey_plotly
@@ -295,7 +311,8 @@ server <- function(input, output, session, ...) {
         )
 
       OD_work_alluvial_travelcolour <- 
-        ggplot(dataset_simlabel_selected_allu, aes(y = N_workers, axis1 = place_of_residence, axis2 = place_of_work_sim, fill = journey_type_colour_highlight)) +
+        ggplot(dataset_simlabel_selected_allu,
+               aes(y = N_workers, axis1 = place_of_residence, axis2 = place_of_work_sim, fill = journey_type_colour_highlight)) +
         geom_alluvium(aes(fill = journey_type_colour_highlight), width = .2, alpha = 1) +
         geom_stratum(width = .2, fill = "#EEEEEE", color = "#FFFFFF") +
         # http://corybrunson.github.io/ggalluvial/reference/stat_stratum.html
@@ -303,22 +320,22 @@ server <- function(input, output, session, ...) {
         geom_text(stat = "stratum",
                   aes(label = paste0(after_stat(stratum),
                                      # if count too small (i.e. short stratum height), keep district and count in one single line
-                                     ifelse(after_stat(count) < 5e4, " - ", "\n"),
+                                     ifelse(after_stat(count) < 1e5, " - ", "\n"),
                                      # count with thousand separators
                                      after_stat(format(count, big.mark = ",")))),
-                  size = 2.25) +
-        scale_x_discrete(limits = c("Place of \nResidence", "Place of \nWork"), expand = c(.05, .05), position = "top") +
+                  size = 2) +
+        scale_x_discrete(limits = c("Place of \nResidence", "Place of \nWork"), expand = c(.075, .075), position = "top") +
         # scale_fill_manual(values = MA_NT_PALETTE, aesthetics = c("colour", "fill")) +
         scale_fill_identity() +
         # scale_fill_brewer(type = "qual", palette = "Set1") +
         coord_cartesian(clip = "off") +
         theme_void() +
         theme(
-          plot.title = element_text(size = 30),
-          plot.subtitle = element_text(size = 18),
-          plot.caption = element_text(size = 8, vjust = 30),
+          plot.title = element_text(size = 24),
+          plot.subtitle = element_text(size = 16),
+          plot.caption = element_text(size = 6, vjust = 25),
           # vjust to move x-axis title lower
-          axis.text.x = element_text(size = 12, vjust = -15),
+          axis.text.x = element_text(size = 10, vjust = -15),
           legend.position = "None"
         ) +
         labs(
@@ -330,7 +347,8 @@ server <- function(input, output, session, ...) {
       OD_work_alluvial_travelcolour
     },
     height = 1200,
-    width = 600
+    width = 600,
+    res = 96
   )
 }
 
