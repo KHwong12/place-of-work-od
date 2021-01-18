@@ -290,7 +290,8 @@ server <- function(input, output, session, ...) {
           journey_type_colour_highlight = ifelse((origin_ID %in% input$residence_group & destination_ID %in% input$work_group), journey_type_colour, "#cccccc33"),
           ) %>%
         mutate(
-          journey_type_colour_highlight = factor(journey_type_colour_highlight, levels = c("#4daf4a33", "#377eb833", "#ff7f0033", "#984ea333", "#cccccc33"))
+          # put highlighted (selected) rows to the top and draw the non-highlighted grey flows first
+          journey_type_colour_highlight = factor(journey_type_colour_highlight, levels = c("#4daf4a66", "#377eb866", "#ff7f0066", "#984ea366", "#cccccc33"))
         )
 
       OD_work_alluvial_travelcolour <- 
@@ -299,7 +300,13 @@ server <- function(input, output, session, ...) {
         geom_stratum(width = .2, fill = "#EEEEEE", color = "#FFFFFF") +
         # http://corybrunson.github.io/ggalluvial/reference/stat_stratum.html
         # https://stackoverflow.com/questions/29465941/format-number-in-r-with-both-comma-thousands-separator-and-specified-decimals
-        geom_text(stat = "stratum", aes(label = paste0(after_stat(stratum), "\n", after_stat(format(count, big.mark = ",")))), size = 2.5) +
+        geom_text(stat = "stratum",
+                  aes(label = paste0(after_stat(stratum),
+                                     # if count too small (i.e. short stratum height), keep district and count in one single line
+                                     ifelse(after_stat(count) < 5e4, " - ", "\n"),
+                                     # count with thousand separators
+                                     after_stat(format(count, big.mark = ",")))),
+                  size = 2.25) +
         scale_x_discrete(limits = c("Place of \nResidence", "Place of \nWork"), expand = c(.05, .05), position = "top") +
         # scale_fill_manual(values = MA_NT_PALETTE, aesthetics = c("colour", "fill")) +
         scale_fill_identity() +
@@ -307,7 +314,11 @@ server <- function(input, output, session, ...) {
         coord_cartesian(clip = "off") +
         theme_void() +
         theme(
-          axis.text.x = element_text(size = 12),
+          plot.title = element_text(size = 30),
+          plot.subtitle = element_text(size = 18),
+          plot.caption = element_text(size = 8, vjust = 30),
+          # vjust to move x-axis title lower
+          axis.text.x = element_text(size = 12, vjust = -15),
           legend.position = "None"
         ) +
         labs(

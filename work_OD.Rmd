@@ -44,8 +44,6 @@ library(plotly)
 # https://stackoverflow.com/questions/55702377/ggplot2-doesnt-show-chinese-character-properly-in-rstudio-server-in-docker
 library(showtext)
 
-library(rayshader)
-
 # library(scales)
 library(formattable)
 
@@ -412,6 +410,59 @@ OD_work_alluvial_travelcolour_mant
 ```{r}
 ggsave("OD_work_alluvial_travelcolour_mant.svg", width = 150, height = 450, units = "mm")
 
+```
+
+
+### Test with highlight effect 
+
+```{r, fig.width=5, fig.height=10}
+
+# manual gghighlight
+dataset_simlabel_selected_allu <- dataset_simlabel %>%
+  # simulate choosing origins in HKI and all destinations
+  mutate(
+    journey_type_colour_highlight = ifelse((origin_ID %in% c(0,1,2,3) & destination_ID %in% seq(18, 39)), journey_type_colour, "#cccccc33"),
+    ) %>%
+  mutate(
+    # put highlighted (selected) rows to the top and draw the non-highlighted grey flows first
+    journey_type_colour_highlight = factor(journey_type_colour_highlight, levels = c("#4daf4a66", "#377eb866", "#ff7f0066", "#984ea366", "#cccccc33"))
+  )
+
+OD_work_alluvial_travelcolour <- 
+  ggplot(dataset_simlabel_selected_allu, aes(y = N_workers, axis1 = place_of_residence, axis2 = place_of_work_sim, fill = journey_type_colour_highlight)) +
+  geom_alluvium(aes(fill = journey_type_colour_highlight), width = .2, alpha = 1) +
+  geom_stratum(width = .2, fill = "#EEEEEE", color = "#FFFFFF") +
+  # http://corybrunson.github.io/ggalluvial/reference/stat_stratum.html
+  # https://stackoverflow.com/questions/29465941/format-number-in-r-with-both-comma-thousands-separator-and-specified-decimals
+  geom_text(stat = "stratum",
+            aes(label = paste0(after_stat(stratum),
+                               # if count too small (i.e. short stratum height), keep district and count in one single line
+                               ifelse(after_stat(count) < 5e4, " - ", "\n"),
+                               # count with thousand separators
+                               after_stat(format(count, big.mark = ",")))),
+            size = 2.25) +
+  scale_x_discrete(limits = c("Place of \nResidence", "Place of \nWork"), expand = c(.05, .05), position = "top") +
+  # scale_fill_manual(values = MA_NT_PALETTE, aesthetics = c("colour", "fill")) +
+  scale_fill_identity() +
+  # scale_fill_brewer(type = "qual", palette = "Set1") +
+  coord_cartesian(clip = "off") +
+  theme_void() +
+  theme(
+    plot.title = element_text(size = 30),
+    plot.subtitle = element_text(size = 18),
+    plot.caption = element_text(size = 8, vjust = 30),
+    # vjust to move x-axis title lower
+    axis.text.x = element_text(size = 12, vjust = -15),
+    legend.position = "None",
+    aspect.ratio = 2/1
+  ) +
+  labs(
+    title = "Flow of commuters",
+    subtitle = "Place of residence and work of commuters in Hong Kong",
+    caption = "Note: workers with no fixed places of work or \nwork in Marine/at home/in places outside Hong Kong are excluded."
+  )
+
+OD_work_alluvial_travelcolour
 ```
 
 
