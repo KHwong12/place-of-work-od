@@ -146,7 +146,7 @@ ui <- fluidPage(
   # tags$mark("Between Hong Kong Island and New Territories", style = "color:#ffffff; background-color:#ff7f00"),
   # tags$mark("Between Kowloon and New Territories", style = "color:#ffffff; background-color:#984ea3"),
   
-  p("Hover/Click on the flows to check the numbers of workers in each flow."),
+  p("Hover and click over the flows to check how many workers are in that living/working place pattern."),
   
   br(),
 
@@ -155,7 +155,7 @@ ui <- fluidPage(
 
   hr(),
 
-  h2("How is your area of interest compared to overall?"),
+  h2("How do your selected areas compared to the overall?"),
   
   p("While the above plot helps you to understand the flow inside your selected origin and destination regions,
     how the selected commuters flows contribute to the overall pattern is not observable. Say, how much do the 
@@ -165,17 +165,20 @@ ui <- fluidPage(
   p("The flows from your selected regions of origins/destinations 
     are highlighted, while those unselected are in grey. You could grasp the quick looks on how your selected OD
     flows comprises the total."),
-  
-  p("When you select only one origin and select all destinations (or vice versa), you could produce a highlighted 
-    chart designated to your area of interest."),
 
   plotOutput("alluPlot", height = "1200px"),
+  
+  p("When you select only one origin and select all destinations (or vice versa), you could produce a highlighted 
+    chart designated to your area of interest like below."),
+  
+  img(src = "fromtoKCD.png", width = "100%"),
   
   hr(),
 
   # Footer ---------------
   div(
     class = "footer",
+    tags$footer("Data source: 2016 Population By-Census"),
     includeHTML("template/footer.html")
   )
 )
