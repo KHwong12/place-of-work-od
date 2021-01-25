@@ -2,7 +2,7 @@
   max-width: 768px;
 }
 
-p {
+p, ul, ol {
   font-size: 18px;
   line-height: 1.55em;
 }
