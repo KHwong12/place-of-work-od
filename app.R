@@ -32,7 +32,7 @@ ui <- fluidPage(
   meta_social(
     .meta = meta(),
     title = "The great migration of workers",
-    description = "Interactive visualisation of commuting flows of 3 million workers in Hong Kong",
+    description = "Interactive visualisation of around 3 million workers' commuting flows in Hong Kong",
     url = "https://kenneth-12.shinyapps.io/place-of-work-od",
     image = ""
   ),
@@ -41,9 +41,10 @@ ui <- fluidPage(
   # Application title
   titlePanel("The great migration of workers"),
   
-  p("Commuting to work is usually not something pleasant. Maybe the work from home culture have changed our understanding of commuting, but
-    the general pattern on the commuting seems do not change much. With around 3,000,000 workers living across and working across the whole 
-    territory of Hong Kong, how does the flow pattern looks like? "),
+  p("Commuting to work is usually not something pleasant. Maybe the work from home culture has changed our 
+    understanding of \"commuting to work\", but the general pattern on the commuting seems do not change much. With around 
+    3,000,000 workers (2.858 million to be more accurate) living across and working across the whole territory 
+    of Hong Kong, how does the pattern of the commuting flows looks like?"),
   
   div(class = "sticky",
     
@@ -114,7 +115,7 @@ ui <- fluidPage(
     tags$b("living"), "in that", tags$i("row"), "and", tags$b("working"), "in that", tags$i("column"), ". ", 
     tags$i("Darker the colour"), "of the square, ", tags$b("more workers"), "are in that living/working place pattern."),
   
-  p("When hovering on the grids, a tooltip will appear, showing the exact number of workers falling to that category."),
+  p("Hover over the coloured grids to check how many workers are in that living/working place pattern."),
 
   br(),
   
@@ -124,9 +125,14 @@ ui <- fluidPage(
 
   h2("The flow of workers"),
   
-  p("Here we have a bunch of 'flows' meandering from left to right: each flow comprises of the total number of workers
-    living in the area stated in the box on the left and working in the area stated in box on the right. The color of
-    the flows are classified according to the travel type, including:"),
+  p("The chart below is a sankey diagram. The two sides of the chart resemables a stacked bar chart showing the total 
+    number of workers. The rectangles on left classify the workers by their place of residence. Those rectangles on 
+    the right classify in terms of the place of work."),
+  
+  p("In the middle, there have a bunch of 'flows' meandering from left to right. Each flow represents an place of 
+    living/working pair from the selected place of residence and work. The thicker the flow, the more workers are 
+    in that living/working location pair. The color of the flows are classified according to the travel type, 
+    including:"),
   
   tags$ul(
     tags$li(tags$mark("Same area", style = "color:#ffffff; background-color:#4daf4a")),
@@ -238,7 +244,6 @@ server <- function(input, output, session, ...) {
                                         '<sup>',
                                         'Number of workers living/working in every selected regions',
                                         '</sup>')))
-    # ggplotly(od_workers_plotly, tooltip = c("text"), width = cdata$output_odHeatmap_width, height = cdata$output_odHeatmap_height)
   })
 
   output$sankey <- renderPlotly({
@@ -331,8 +336,8 @@ server <- function(input, output, session, ...) {
         coord_cartesian(clip = "off") +
         theme_void() +
         theme(
-          plot.title = element_text(size = 24),
-          plot.subtitle = element_text(size = 16),
+          plot.title = element_text(size = 24, face = "bold"),
+          plot.subtitle = element_text(size = 12),
           plot.caption = element_text(size = 6, vjust = 25),
           # vjust to move x-axis title lower
           axis.text.x = element_text(size = 10, vjust = -15),
