@@ -34,7 +34,7 @@ ui <- fluidPage(
     title = "The great migration of workers",
     description = "Interactive visualisation of around 3 million workers' commuting flows in Hong Kong",
     url = "https://kenneth-12.shinyapps.io/place-of-work-od",
-    image = ""
+    image = "https://raw.githubusercontent.com/KHwong12/place-of-work-od/master/www/fromtoKCD.png"
   ),
 
 
