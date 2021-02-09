@@ -219,9 +219,12 @@ server <- function(input, output, session, ...) {
       aes(
         x = place_of_work_sim,
         y = fct_rev(place_of_residence),
-        text = paste0("Place of Residence: ", place_of_residence, "\n",
-                      "Place of Work: ", place_of_work_sim, "\n",
-                      "Number of Workers: ", formattable::comma(N_workers, digits = 0)),
+        # text = paste0("Place of Residence: ", place_of_residence, "\n",
+        #               "Place of Work: ", place_of_work_sim, "\n",
+        #               "Number of Workers: ", formattable::comma(N_workers, digits = 0)),
+        text = paste0("There are ", formattable::comma(N_workers, digits = 0), " workers \n",
+                      "living in ", "<b>", place_of_residence, "</b>", " and\n",
+                      "working in ", "<b>", place_of_work_sim, "</b>"),
         fill = N_workers
       )
     ) +
