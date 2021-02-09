@@ -41,6 +41,7 @@ ui <- fluidPage(
   # Application title
   # titlePanel("The great migration of workers"),
   h1("The great migration of workers"),
+  h3("Where do the workers working in your district live, and where do the workers living in your districrt work"),
   
   br(),
   
@@ -50,14 +51,17 @@ ui <- fluidPage(
     of Hong Kong, how does the pattern of the commuting flows looks like?"),
   
   br(),
-  br(),
-  br(),
-  br(),
+  
+  img(src = "https://images.unsplash.com/photo-1594313724910-ed94feda812d?&auto=format&fit=crop&w=800", align = "center"),
+  
+  tags$figcaption(HTML("<span>Photo by <a href=\"https://unsplash.com/@alisonpang\">Alison Pang</a> 
+         on <a href=\"https://unsplash.com/s/photos/hong-kong-bus\">Unsplash</a></span>"), align = "center"),
+  
   br(),
   
   hr(),
   
-  p("To start, choose the workers you are interested in terms of the living and working place of workers. 
+  p("To start, choose the group of workers you are interested in terms of living and working places. 
     By default, this application chooses all workers living in Hong Kong Island and working in Kowloon."),
   
   div(class = "sticky",
