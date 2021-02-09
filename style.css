@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
 .container-fluid {
   max-width: 768px;
 }
@@ -5,6 +7,10 @@
 p, ul, ol {
   font-size: 18px;
   line-height: 1.55em;
+}
+
+p {
+  font-family: 'Noto Serif', serif;
 }
 
 h4 {
