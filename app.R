@@ -39,12 +39,26 @@ ui <- fluidPage(
 
 
   # Application title
-  titlePanel("The great migration of workers"),
+  # titlePanel("The great migration of workers"),
+  h1("The great migration of workers"),
+  
+  br(),
   
   p("Commuting to work is usually not something pleasant. Maybe the work from home culture has changed our 
-    understanding of \"commuting to work\", but the general pattern on the commuting seems do not change much. With around 
-    3,000,000 workers (2.858 million to be more accurate) living across and working across the whole territory 
+    understanding of \"commuting to work\", but the general pattern of commuting does not change drastically. With around 
+    3,000,000 workers (2.858 million, to be more accurate) living and working across the whole territory 
     of Hong Kong, how does the pattern of the commuting flows looks like?"),
+  
+  br(),
+  br(),
+  br(),
+  br(),
+  br(),
+  
+  hr(),
+  
+  p("To start, choose the workers you are interested in terms of the living and working place of workers. 
+    By default, this application chooses all workers living in Hong Kong Island and working in Kowloon."),
   
   div(class = "sticky",
     
@@ -107,7 +121,7 @@ ui <- fluidPage(
 
   hr(),
 
-  h2("The OD of workers"),
+  h2("Where do the workers live and work?"),
   
   p("How many people are working from/to each district? The following heatmap helps you grasp a quick understanding
     about the travel pattern. The vertical axis list the districts workers are living in, and the horizontol axis 
@@ -131,11 +145,11 @@ ui <- fluidPage(
   
   p("In the middle, there have a bunch of 'flows' meandering from left to right. Each flow represents an place of 
     living/working pair from the selected place of residence and work. The thicker the flow, the more workers are 
-    in that living/working location pair. The color of the flows are classified according to the travel type, 
-    including:"),
+    in that living/working location pair. The color of the flows are classified according to the location of place of
+    residence and work as fellows: "),
   
   tags$ul(
-    tags$li(tags$mark("Same area", style = "color:#ffffff; background-color:#4daf4a")),
+    tags$li(tags$mark("Same area (Hong Kong Island/Kowloon/New Territories)", style = "color:#ffffff; background-color:#4daf4a")),
     tags$li(tags$mark("Between Hong Kong Island and Kowloon", style = "color:#ffffff; background-color:#377eb8")),
     tags$li(tags$mark("Between Hong Kong Island and New Territories", style = "color:#ffffff; background-color:#ff7f00")),
     tags$li(tags$mark("Between Kowloon and New Territories", style = "color:#ffffff; background-color:#984ea3"))
