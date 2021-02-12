@@ -39,8 +39,7 @@ ui <- fluidPage(
 
 
   # Application title
-  # titlePanel("The great migration of workers"),
-  h1("The great migration of workers"),
+  titlePanel(h1("The great migration of workers"), windowTitle = "The great migration of workers"),
   h3("Where do the workers working in your district live, and where do the workers living in your districrt work"),
   
   br(),
