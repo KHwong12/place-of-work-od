@@ -122,18 +122,6 @@ ui <- fluidPage(
   
   htmltools::includeMarkdown("description_md/sankey.md"),
   
-  # tags$ul(
-  #   tags$li(tags$mark("Same area (Hong Kong Island/Kowloon/New Territories)", style = "color:#ffffff; background-color:#4daf4a")),
-  #   tags$li(tags$mark("Between Hong Kong Island and Kowloon", style = "color:#ffffff; background-color:#377eb8")),
-  #   tags$li(tags$mark("Between Hong Kong Island and New Territories", style = "color:#ffffff; background-color:#ff7f00")),
-  #   tags$li(tags$mark("Between Kowloon and New Territories", style = "color:#ffffff; background-color:#984ea3"))
-  # ),
-  
-  # tags$mark("Same area", style = "color:#ffffff; background-color:#4daf4a"),
-  # tags$mark("Between Hong Kong Island and Kowloon", style = "color:#ffffff; background-color:#377eb8"),
-  # tags$mark("Between Hong Kong Island and New Territories", style = "color:#ffffff; background-color:#ff7f00"),
-  # tags$mark("Between Kowloon and New Territories", style = "color:#ffffff; background-color:#984ea3"),
-  
   br(),
 
   # fluidRow(width = 12, plotlyOutput("sankey", height = "1200px"), align = "center"),
@@ -192,8 +180,8 @@ server <- function(input, output, session, ...) {
       )
     ) +
       geom_tile(color = "#EEEEEE", size = 1) +
-      geom_vline(xintercept = c(4.5, 9.5), color = "#ffffff") +
-      geom_hline(yintercept = c(9.5, 14.5), color = "#ffffff") +
+      # geom_vline(xintercept = c(4.5, 9.5), color = "#ffffff") +
+      # geom_hline(yintercept = c(9.5, 14.5), color = "#ffffff") +
       scale_fill_viridis_c(option = "A", direction = -1, trans = "log") +
       scale_x_discrete(position = "top") +
       theme_minimal() +
