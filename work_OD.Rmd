@@ -504,7 +504,65 @@ od_workers_plot
 ```
 
 ```{r}
-ggsave("od_workers_plot.svg", dpi = 300)
+place_of_work_district_details = 
+tribble(
+  ~place_of_work, ~place_of_work_district,
+  "Central and Western", "Central and Western",
+  "Wan Chai", "Wan Chai",
+  "Eastern", "Eastern",
+  "Southern", "Southern",
+  "Yau Tsim Mong", "Yau Tsim Mong",
+  "Sham Shui Po", "Sham Shui Po",
+  "Kowloon City", "Kowloon City",
+  "Wong Tai Sin", "Wong Tai Sin",
+  "Kwun Tong", "Kwun Tong",
+  "Tseung Kwan O New Town", "Sai Kung",
+  "Tsuen Wan New Town", "Tsuen Wan",
+  "Tuen Mun New Town", "Tuen Mun",
+  "Yuen Long New Town", "Yuen Long",
+  "Tin Shui Wai New Town", "Yuen Long",
+  "Fanling/ Sheung Shui New Town", "North",
+  "Tai Po New Town", "Tai Po",
+  "Sha Tin New Town", "Sha Tin",
+  "Ma On Shan New Town", "Sha Tin",
+  "Kwai Chung New Town", "Kwai Tsing",
+  "Tsing Yi New Town", "Kwai Tsing",
+  "North Lantau New Town", "Islands",
+  "Other areas in the New Territories", "Others"
+)
+
+
+```
+
+
+```{r}
+
+cross_travel_type_rmspecial_simlabel_rmsame = cross_travel_type_rmspecial_simlabel %>%
+  left_join(place_of_work_district_details, by = "place_of_work") %>%
+  mutate(place_of_resdience_chr = as.character(place_of_residence)) %>%
+  mutate(same_district = place_of_resdience_chr == place_of_work_district) %>%
+  dplyr::filter(!same_district)
+  
+
+od_workers_plot_rmsame = ggplot(cross_travel_type_rmspecial_simlabel_rmsame,
+                         aes(x = place_of_work_sim, y = fct_rev(place_of_residence), fill = N_workers)) +
+  geom_tile(color = "#EEEEEE", size = 1) +
+  geom_vline(xintercept = c(4.5, 9.5), color = "#ffffff") +
+  geom_hline(yintercept = c(9.5, 14.5), color = "#ffffff") +
+  scale_fill_viridis_c(option = "A", direction = -1, trans = "log") +
+  scale_x_discrete(position = "top") +
+  theme_bw() +
+  theme(
+    axis.text.x = element_text(angle = 90, vjust = -1, hjust = 0),
+    aspect.ratio = 18/22
+  ) +
+  labs(
+    y = "Place of residence",
+    x = "Place of work",
+    title = "The OD of workers"
+  )
+  
+od_workers_plot_rmsame
 ```
 
 ```{r}
