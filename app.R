@@ -38,7 +38,7 @@ ui <- fluidPage(
   ),
 
 
-  # Application title
+  # Application title and subtitle
   titlePanel(h1("The great migration of workers"), windowTitle = "The great migration of workers"),
   h3("Where do the workers working in your district live, and where do the workers living in your districrt work"),
   
@@ -111,8 +111,6 @@ ui <- fluidPage(
   ),
 
   hr(),
-
-  h2("Where do the workers live and work?"),
   
   htmltools::includeMarkdown("description_md/heatmap.md"),
 
@@ -121,8 +119,6 @@ ui <- fluidPage(
   plotlyOutput("odHeatmap", height = "800px"),
 
   hr(),
-
-  h2("The flow of workers"),
   
   htmltools::includeMarkdown("description_md/sankey.md"),
   
@@ -145,16 +141,7 @@ ui <- fluidPage(
 
   hr(),
 
-  h2("How do your selected areas compared to the overall?"),
-  
-  p("While the above plot helps you to understand the flow inside your selected origin and destination regions,
-    how the selected commuters flows contribute to the overall pattern is not observable. Say, how much do the 
-    selected flows comprises of the total number of flows? The plot below helps you to understand your selected 
-    area of interest from the overall perspective."),
-  
-  p("The flows from your selected regions of origins/destinations 
-    are highlighted, while those unselected are in grey. You could grasp the quick looks on how your selected OD
-    flows comprises the total."),
+  htmltools::includeMarkdown("description_md/sankey-overall.md"),
 
   plotOutput("alluPlot", height = "1200px"),
   
@@ -294,9 +281,7 @@ server <- function(input, output, session, ...) {
 
     od_sankey_plotly
   })
-
-  MA_NT_PALETTE <- c("FALSE" = "#377eb8", "TRUE" = "#e25a61")
-
+  
   output$alluPlot <- renderPlot({
     
       req(input$residence_group)
@@ -325,7 +310,7 @@ server <- function(input, output, session, ...) {
                                      # count with thousand separators
                                      after_stat(format(count, big.mark = ",")))),
                   size = 2) +
-        scale_x_discrete(limits = c("Place of \nResidence", "Place of \nWork"), expand = c(.075, .075), position = "top") +
+        scale_x_discrete(limits = c("Place of\nResidence", "Place of\nWork"), expand = c(.075, .075), position = "top") +
         # scale_fill_manual(values = MA_NT_PALETTE, aesthetics = c("colour", "fill")) +
         scale_fill_identity() +
         # scale_fill_brewer(type = "qual", palette = "Set1") +

@@ -1,3 +1,5 @@
+## The flow of workers
+
 The chart below is a **sankey diagram**. The two sides of the chart resembles a stacked bar chart showing the total 
 number of workers. The rectangles on left classify the workers by their place of residence. Those rectangles on 
 the right classify in terms of the place of work.
