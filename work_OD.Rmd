@@ -466,7 +466,6 @@ OD_work_alluvial_travelcolour
 ```
 
 
-
 ## Heatmap
 
 ```{r}
@@ -563,7 +562,49 @@ od_workers_plot_rmsame = ggplot(cross_travel_type_rmspecial_simlabel_rmsame,
   )
   
 od_workers_plot_rmsame
+# ggsave("od_workers_plot_rmsame.pdf", dpi = 300)
 ```
+
+```{r}
+NT_AREA = c("NTE", "NTW", "I", "NT_Others")
+
+cross_travel_type_rmspecial_3areas = 
+  cross_travel_type_rmspecial_simlabel %>% 
+  mutate(
+    residence_area_sim = ifelse(residence_area %in% NT_AREA, "NT", residence_area),
+    work_area_sim = ifelse(work_area %in% NT_AREA, "NT", work_area)
+    ) %>%
+  group_by(residence_area_sim, work_area_sim) %>%
+  summarise(N_workers = sum(N_workers))
+
+cross_travel_type_rmspecial_5areas = 
+  cross_travel_type_rmspecial_simlabel %>% 
+  group_by(residence_area, work_area) %>%
+  summarise(N_workers = sum(N_workers))
+```
+
+```{r}
+od_workers_plot_3areas = ggplot(cross_travel_type_rmspecial_5areas,
+                         aes(x = work_area, y = fct_rev(residence_area), fill = N_workers)) +
+  geom_tile(color = "#EEEEEE", size = 1) +
+  geom_text(aes(label = N_workers, color = ifelse(N_workers > 1e5, "#FFFFFF", "#222222"))) +
+  scale_fill_viridis_c(option = "A", direction = -1, trans = "log") +
+  scale_x_discrete(position = "top") +
+  scale_color_identity() +
+  theme_bw() +
+  theme(
+    axis.text.x = element_text(angle = 90, vjust = -1, hjust = 0),
+    aspect.ratio = 18/22
+  ) +
+  labs(
+    y = "Place of residence",
+    x = "Place of work",
+    title = "The OD of workers"
+  )
+  
+od_workers_plot_3areas
+```
+
 
 ```{r}
 od_workers_plotly = ggplot(cross_travel_type_rmspecial_simlabel, 
@@ -594,6 +635,13 @@ od_workers_plotly = ggplot(cross_travel_type_rmspecial_simlabel,
 ggplotly(od_workers_plotly, tooltip = c("text"), height = 540, width = 660)
 ```
 
+## OD Matrix
+
+```{r}
+od_matrix = cross_travel_type_rmspecial_simlabel %>%
+  dplyr::select(place_of_residence, place_of_work_sim, N_workers) %>%
+  pivot_wider(names_from = place_of_work_sim, values_from = N_workers)
+```
 
 
 ## rayshader test
