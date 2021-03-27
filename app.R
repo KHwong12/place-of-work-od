@@ -110,9 +110,13 @@ ui <- fluidPage(
     )
   ),
 
-  hr(),
+  br(),
   
-  textOutput("n_workers_selected"),
+  h3("Number of workers in the selected regions", style = "text-align:center;"),
+  
+  span(textOutput("n_workers_selected"), style = "font-size: 40px;font-weight: bold;"),
+  
+  hr(),
 
   htmltools::includeMarkdown("description_md/heatmap.md"),
 
@@ -162,12 +166,16 @@ server <- function(input, output, session, ...) {
   output$n_workers_selected <- renderText({
     req(input$residence_group)
     
+    all_workers = sum(dataset_simlabel$N_workers)
+    
     dataset_simlabel_selected <- dataset_simlabel %>%
       subset(origin_ID %in% input$residence_group & destination_ID %in% input$work_group)
     
     total_workers_selected <- sum(dataset_simlabel_selected$N_workers)
+    per_workers_selected <- total_workers_selected / all_workers
     
-    paste0("Number of workers: ", formattable::comma(total_workers_selected, digits = 0))
+    paste0(formattable::comma(total_workers_selected, digits = 0),
+           " (", formattable::percent(per_workers_selected, digits = 1), " of total)")
     
   })
 
