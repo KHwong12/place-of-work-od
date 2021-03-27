@@ -111,6 +111,8 @@ ui <- fluidPage(
   ),
 
   hr(),
+  
+  textOutput("n_workers_selected"),
 
   htmltools::includeMarkdown("description_md/heatmap.md"),
 
@@ -155,6 +157,19 @@ server <- function(input, output, session, ...) {
   # to relay the height/width of the plot's container, we'll query this
   # session's client data http://shiny.rstudio.com/articles/client-data.html
   cdata <- session$clientData
+  
+  
+  output$n_workers_selected <- renderText({
+    req(input$residence_group)
+    
+    dataset_simlabel_selected <- dataset_simlabel %>%
+      subset(origin_ID %in% input$residence_group & destination_ID %in% input$work_group)
+    
+    total_workers_selected <- sum(dataset_simlabel_selected$N_workers)
+    
+    paste0("Number of workers: ", formattable::comma(total_workers_selected, digits = 0))
+    
+  })
 
   MIN_SCREEN_WIDTH <- 300
   MAX_SCREEN_WIDTH <- 768
