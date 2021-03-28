@@ -43,7 +43,16 @@ ui <- fluidPage(
   h3("Where do the workers working in your district live, and where do the workers living in your districrt work"),
 
   br(),
+  
+  p("Note for mobile users:", br(),
+    "Currently, the interactive charts cannot be displayed correctly on mobile devices. Please consider viewing 
+    this webpage on tablet or laptop, or reading the description of this webpage on ",
+    tags$a("my Medium blog", href = "https://medium.com/@khwongk12/interactive-visualisation-of-commute-pattern-in-hong-kong-3a54b021076d"),
+    ". Sorry about that :/",
+    style = "font-size: 0.9em;text-align: center;font-family: Lato"),
 
+  br(),
+  
   htmltools::includeMarkdown("description_md/introduction.md"),
 
   hr(),
@@ -144,6 +153,10 @@ ui <- fluidPage(
 
   img(src = "fromtoKCD.png", width = "100%"),
 
+  hr(),
+  
+  htmltools::includeMarkdown("description_md/conclusion.md"),
+  
   hr(),
 
   # Footer ---------------
