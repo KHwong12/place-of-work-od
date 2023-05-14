@@ -176,6 +176,75 @@ work_OD_plot_reorder_KT = work_OD_plot_reorder %>%
   subset(place_of_work == "Kwun Tong")
 ```
 
+```{r}
+cross_district_summary = work_OD_plot_reorder %>%
+  group_by(residence_area, work_area) %>%
+  summarise(
+    total_N = sum(N_workers)
+  )
+```
+
+```{r}
+cross_travel_type = work_OD_plot_reorder %>%
+  mutate(
+    journey_type = case_when(
+      travel_dir %in% c("HKI to HKI", "KL to KL", "NTW to NTW", "NTE to NTE", "I to I") ~ "Same Area",
+      travel_dir %in% c("HKI to KL", "KL to HKI") ~ "HKI/KL",
+      travel_dir %in% c("HKI to NTW", "NTW to HKI") ~"HKI/NTW",
+      travel_dir %in% c("HKI to NTE", "NTE to HKI") ~ "HKI/NTE",
+      travel_dir %in% c("HKI to I", "I to HKI") ~ "HKI/I",
+      travel_dir %in% c("KL to NTW", "NTW to KL") ~ "KL/NTW",
+      travel_dir %in% c("KL to NTE", "NTE to KL") ~ "KL/NTE",
+      travel_dir %in% c("KL to I", "I to KL") ~ "KL/I",
+      travel_dir %in% c("NTW to NTE", "NTE to NTW") ~ "NTW/NTE",
+      travel_dir %in% c("NTW to I", "I to NTW") ~ "NTW/I",
+      travel_dir %in% c("NTE to I", "I to NTE") ~ "NTE/I",
+      travel_dir %in% c("HKI to NT_Others", "KL to NT_Others", "NTW to NT_Others", "NTE to NT_Others", "I to NT_Others") ~ "to_NT_Others",
+      travel_dir %in% c("HKI to Others", "KL to Others", "NTW to Others", "NTE to Others", "I to Others") ~ "to_Others"
+    )
+  ) %>%
+  # Combine NTW and I
+  mutate(
+    journey_type_sim = case_when(
+      travel_dir %in% c("HKI to HKI", "KL to KL", "NTW to NTW", "NTE to NTE", "I to I", "NTW to I", "I to NTW") ~ "Same Area",
+      travel_dir %in% c("HKI to KL", "KL to HKI") ~ "HKI/KL",
+      travel_dir %in% c("HKI to NTW", "NTW to HKI", "HKI to I", "I to HKI") ~ "HKI/NTW",
+      travel_dir %in% c("HKI to NTE", "NTE to HKI") ~ "HKI/NTE",
+      travel_dir %in% c("KL to NTW", "NTW to KL", "KL to I", "I to KL") ~ "KL/NTW",
+      travel_dir %in% c("KL to NTE", "NTE to KL") ~ "KL/NTE",
+      travel_dir %in% c("NTW to NTE", "NTE to NTW", "NTE to I", "I to NTE") ~ "NTW/NTE",
+      travel_dir %in% c("HKI to NT_Others", "KL to NT_Others", "NTW to NT_Others", "NTE to NT_Others", "I to NT_Others") ~ "to_NT_Others",
+      travel_dir %in% c("HKI to Others", "KL to Others", "NTW to Others", "NTE to Others", "I to Others") ~ "to_Others"
+    )
+  ) %>%
+  # HKI, KL, NT, Others
+  mutate(
+    journey_type_mostsim = case_when(
+      travel_dir %in% c("HKI to HKI", "KL to KL", "NTW to NTW", "NTE to NTE", "I to I", "NTW to I", "I to NTW", "NTW to NTE", "NTE to NTW", "NTE to I", "I to NTE", "NTW to NT_Others", "NTE to NT_Others", "I to NT_Others") ~ "Same Area",
+      travel_dir %in% c("HKI to KL", "KL to HKI") ~ "HKI/KL",
+      travel_dir %in% c("HKI to NTW", "NTW to HKI", "HKI to I", "I to HKI", "HKI to NTE", "NTE to HKI", "HKI to NT_Others") ~ "HKI/NT",
+      travel_dir %in% c("KL to NTW", "NTW to KL", "KL to I", "I to KL", "KL to NTE", "NTE to KL", "KL to NT_Others") ~ "KL/NT",
+      travel_dir %in% c("HKI to Others", "KL to Others", "NTW to Others", "NTE to Others", "I to Others") ~ "to_Others"
+    )
+  )
+
+```
+
+```{r}
+cross_travel_type_rmspecial = cross_travel_type %>%
+  subset(place_of_work != "No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong")
+```
+
+
+```{r}
+cross_travel_type_rmspecial %>%
+  group_by(is_cross_ma_nt) %>%
+  summarise(
+    total_N = sum(N_workers)
+  )
+```
+
+
 ## ggalluvial
 
 Since we are interested in the actual commuting flow from land to land, here we drop the no fixed place categories.
@@ -279,75 +348,6 @@ ggsave("OD_work_alluvial_chi.svg", width = 150, height = 450, units = "mm")
 ```
 
 ## ggalluvial, colour with whether cross-district or not
-
-```{r}
-cross_district_summary = work_OD_plot_reorder %>%
-  group_by(residence_area, work_area) %>%
-  summarise(
-    total_N = sum(N_workers)
-  )
-```
-
-```{r}
-cross_travel_type = work_OD_plot_reorder %>%
-  mutate(
-    journey_type = case_when(
-      travel_dir %in% c("HKI to HKI", "KL to KL", "NTW to NTW", "NTE to NTE", "I to I") ~ "Same Area",
-      travel_dir %in% c("HKI to KL", "KL to HKI") ~ "HKI/KL",
-      travel_dir %in% c("HKI to NTW", "NTW to HKI") ~"HKI/NTW",
-      travel_dir %in% c("HKI to NTE", "NTE to HKI") ~ "HKI/NTE",
-      travel_dir %in% c("HKI to I", "I to HKI") ~ "HKI/I",
-      travel_dir %in% c("KL to NTW", "NTW to KL") ~ "KL/NTW",
-      travel_dir %in% c("KL to NTE", "NTE to KL") ~ "KL/NTE",
-      travel_dir %in% c("KL to I", "I to KL") ~ "KL/I",
-      travel_dir %in% c("NTW to NTE", "NTE to NTW") ~ "NTW/NTE",
-      travel_dir %in% c("NTW to I", "I to NTW") ~ "NTW/I",
-      travel_dir %in% c("NTE to I", "I to NTE") ~ "NTE/I",
-      travel_dir %in% c("HKI to NT_Others", "KL to NT_Others", "NTW to NT_Others", "NTE to NT_Others", "I to NT_Others") ~ "to_NT_Others",
-      travel_dir %in% c("HKI to Others", "KL to Others", "NTW to Others", "NTE to Others", "I to Others") ~ "to_Others"
-    )
-  ) %>%
-  # Combine NTW and I
-  mutate(
-    journey_type_sim = case_when(
-      travel_dir %in% c("HKI to HKI", "KL to KL", "NTW to NTW", "NTE to NTE", "I to I", "NTW to I", "I to NTW") ~ "Same Area",
-      travel_dir %in% c("HKI to KL", "KL to HKI") ~ "HKI/KL",
-      travel_dir %in% c("HKI to NTW", "NTW to HKI", "HKI to I", "I to HKI") ~ "HKI/NTW",
-      travel_dir %in% c("HKI to NTE", "NTE to HKI") ~ "HKI/NTE",
-      travel_dir %in% c("KL to NTW", "NTW to KL", "KL to I", "I to KL") ~ "KL/NTW",
-      travel_dir %in% c("KL to NTE", "NTE to KL") ~ "KL/NTE",
-      travel_dir %in% c("NTW to NTE", "NTE to NTW", "NTE to I", "I to NTE") ~ "NTW/NTE",
-      travel_dir %in% c("HKI to NT_Others", "KL to NT_Others", "NTW to NT_Others", "NTE to NT_Others", "I to NT_Others") ~ "to_NT_Others",
-      travel_dir %in% c("HKI to Others", "KL to Others", "NTW to Others", "NTE to Others", "I to Others") ~ "to_Others"
-    )
-  ) %>%
-  # HKI, KL, NT, Others
-  mutate(
-    journey_type_mostsim = case_when(
-      travel_dir %in% c("HKI to HKI", "KL to KL", "NTW to NTW", "NTE to NTE", "I to I", "NTW to I", "I to NTW", "NTW to NTE", "NTE to NTW", "NTE to I", "I to NTE", "NTW to NT_Others", "NTE to NT_Others", "I to NT_Others") ~ "Same Area",
-      travel_dir %in% c("HKI to KL", "KL to HKI") ~ "HKI/KL",
-      travel_dir %in% c("HKI to NTW", "NTW to HKI", "HKI to I", "I to HKI", "HKI to NTE", "NTE to HKI", "HKI to NT_Others") ~ "HKI/NT",
-      travel_dir %in% c("KL to NTW", "NTW to KL", "KL to I", "I to KL", "KL to NTE", "NTE to KL", "KL to NT_Others") ~ "KL/NT",
-      travel_dir %in% c("HKI to Others", "KL to Others", "NTW to Others", "NTE to Others", "I to Others") ~ "to_Others"
-    )
-  )
-
-```
-
-```{r}
-cross_travel_type_rmspecial = cross_travel_type %>%
-  subset(place_of_work != "No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong")
-```
-
-
-```{r}
-cross_travel_type_rmspecial %>%
-  group_by(is_cross_ma_nt) %>%
-  summarise(
-    total_N = sum(N_workers)
-  )
-```
-
 
 
 ```{r}
