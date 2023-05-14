@@ -51,6 +51,11 @@ library(ggrepel)
 
 ```
 
+```{r}
+source("R/plot_defaults.R")
+```
+
+
 
 ```{r}
 # https://stackoverflow.com/questions/46996501/readrread-csv-issue-chinese-character-becomes-messy-codes
@@ -481,17 +486,22 @@ cross_travel_type_rmspecial_simlabel = cross_travel_type_rmspecial %>%
 ```
 
 
-```{r}
+```{r, fig.width=9, fig.height=9}
 od_workers_plot = ggplot(cross_travel_type_rmspecial_simlabel, aes(x = place_of_work_sim, y = fct_rev(place_of_residence), fill = N_workers)) +
+  
   geom_tile(color = "#EEEEEE", size = 1) +
-  geom_vline(xintercept = c(4.5, 9.5), color = "#ffffff") +
-  geom_hline(yintercept = c(9.5, 14.5), color = "#ffffff") +
+  
+  geom_vline(xintercept = c(4.5, 9.5), linetype = "dashed", color = "grey40") +
+  geom_hline(yintercept = c(9.5, 14.5), linetype = "dashed", color = "grey40") +
+  
   scale_fill_viridis_c(option = "A", direction = -1, trans = "log") +
+  
   scale_x_discrete(position = "top") +
-  theme_bw() +
-  coord_fixed() +
+  
+  coord_fixed(clip = "off") +
+
   theme(
-    axis.text.x = element_text(angle = 90, vjust = -1, hjust = 0),
+    axis.text.x = element_text(angle = 90, vjust = .5, hjust = 0, debug = TRUE),
   ) +
   labs(
     y = "Place of residence",
