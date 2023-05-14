@@ -489,9 +489,9 @@ od_workers_plot = ggplot(cross_travel_type_rmspecial_simlabel, aes(x = place_of_
   scale_fill_viridis_c(option = "A", direction = -1, trans = "log") +
   scale_x_discrete(position = "top") +
   theme_bw() +
+  coord_fixed() +
   theme(
     axis.text.x = element_text(angle = 90, vjust = -1, hjust = 0),
-    aspect.ratio = 18/22
   ) +
   labs(
     y = "Place of residence",
@@ -550,10 +550,10 @@ od_workers_plot_rmsame = ggplot(cross_travel_type_rmspecial_simlabel_rmsame,
   geom_hline(yintercept = c(9.5, 14.5), color = "#ffffff") +
   scale_fill_viridis_c(option = "A", direction = -1, trans = "log") +
   scale_x_discrete(position = "top") +
+  coord_fixed() +
   theme_bw() +
   theme(
     axis.text.x = element_text(angle = 90, vjust = -1, hjust = 0),
-    aspect.ratio = 18/22
   ) +
   labs(
     y = "Place of residence",
