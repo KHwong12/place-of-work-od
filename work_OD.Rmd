@@ -474,17 +474,34 @@ OD_work_alluvial_travelcolour
 ## Heatmap
 
 ```{r}
-WORKPLACE_ORDER_SIM = c("Central and Western", "Wan Chai", "Eastern", "Southern", "Yau Tsim Mong", "Sham Shui Po", "Kowloon City", "Wong Tai Sin", "Kwun Tong", "Kwai Chung NT", "Tsuen Wan NT", "Tsing Yi NT", "Tuen Mun NT", "Tin Shui Wai NT", "Yuen Long NT", "Fanling/ Sheung Shui NT", "Tai Po NT", "Sha Tin NT", "Ma On Shan NT", "Tseung Kwan O NT", "North Lantau NT", "Others")
+WORKPLACE_ORDER_SIM = c(
+  "Central and Western", "Wan Chai", "Eastern", "Southern",
+  "Yau Tsim Mong", "Sham Shui Po", "Kowloon City", "Wong Tai Sin", "Kwun Tong",
+  "Kwai Chung NT", "Tsuen Wan NT", "Tsing Yi NT",
+  "Tuen Mun NT", "Tin Shui Wai NT", "Yuen Long NT",
+  "Fanling/ Sheung Shui NT", "Tai Po NT", "Sha Tin NT", "Ma On Shan NT",
+  "Tseung Kwan O NT", "North Lantau NT",
+  "Other areas", "Others"
+  )
 
-cross_travel_type_rmspecial_simlabel = cross_travel_type_rmspecial %>%
+cross_travel_type_simlabel = cross_travel_type %>%
   mutate(
-    place_of_work_sim = ifelse(place_of_work == "Other areas in the New Territories", "Others", str_replace(place_of_work, "New Town", "NT"))
+    place_of_work_sim = case_when(
+      place_of_work == "Other areas in the New Territories" ~ "Other areas",
+      place_of_work == "No fixed places of work in Hong Kong/ Marine/ Work at home/ Places outside Hong Kong" ~ "Others",
+      TRUE ~ str_replace(place_of_work, "New Town", "NT")
+    )
   ) %>%
   mutate(
     place_of_work_sim = factor(place_of_work_sim, WORKPLACE_ORDER_SIM)
   )
+
+cross_travel_type_rmspecial_simlabel = cross_travel_type_simlabel %>%
+  filter(place_of_work_sim != "Others")
+
 ```
 
+### English
 
 ```{r, fig.width=9, fig.height=9}
 od_workers_plot = ggplot(cross_travel_type_rmspecial_simlabel, aes(x = place_of_work_sim, y = fct_rev(place_of_residence), fill = N_workers)) +
